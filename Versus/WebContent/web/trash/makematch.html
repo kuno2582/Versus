@@ -1,0 +1,24 @@
+<div id="make_match" class="mfp-hide w3ls_small_dialog">
+	<h2>경기 만들기</h2>
+	<div class="modal-body agileits_modal_body team">
+	<form action="#">
+		<label for="match_place">장소</label><input type="text" name="match_place" class="make_input" autofocus required><br>
+		<label for="match_date">일시</label><input type="date" name="match_date" class="make_input" id="match_date"><br>
+		<label for="match_phone">연락처</label><input type="text" name="match_phone" class="make_input" required><br>
+		<label for="match_uniform">유니폼색상</label><input type="text" name="match_uniform" class="make_input"><br>
+		<div class="teamdata_con">
+			<input type="checkbox" value="shower" >샤워실
+			<input type="checkbox" value="parking" >주차장
+			<input type="checkbox" value="neon" >전광판
+			<input type="checkbox" value="whistle" >호루라기
+		</div>
+		<span>- 상세정보 -</span>
+		<textarea name="match_more" class="make_input" style="resize:none;width:100%;"></textarea><br>
+		<div class="teamdata_con">
+			<div id="teamdata_map">
+			</div>
+		</div>
+		<input type="submit" value="만들기">
+	</form>
+	</div>
+</div>
