@@ -82,4 +82,27 @@ $(window).load(function() {
 			$(".btn-nav").toggleClass("animated");
 	});
 	
+	/*$.ajax({
+		type:"post",
+		url:"searchMatch.do",
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		data:{
+			region1 : searchMatchForm.region1.value,
+			region2 : searchMatchForm.region2.value,
+			search_month : searchMatchForm.search_month.value,
+			search_day : searchMatchForm.search_day.value,
+			time1 : searchMatchForm.time1.value,
+			time2 : searchMatchForm.time2.value
+		},
+		datatype:"json",
+		success:function(){
+			firstLoad = false;
+			location.href="main.jsp";
+		},
+		fail:function(){
+			alert('실패');
+		}
+	});*/
+	
 });
+

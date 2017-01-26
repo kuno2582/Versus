@@ -6,6 +6,7 @@ public class InputMemberInfoDto {
 	String nickName;
 	String region;
 	int teamCode;
+	String teamName;
 	boolean leader;
 	boolean second_leader;
 	
@@ -13,13 +14,22 @@ public class InputMemberInfoDto {
 		
 	}
 	
-	public InputMemberInfoDto(String id, String nickName, String region, int teamCode, boolean leader, boolean second_leader){
+	public InputMemberInfoDto(String id, String nickName, String region, int teamCode, String teamName, boolean leader, boolean second_leader){
 		this.id = id;
 		this.nickName = nickName;
 		this.region = region;
 		this.teamCode = teamCode;
+		this.teamName = teamName;
 		this.leader = leader;
 		this.second_leader = second_leader;
+	}
+
+	public String getTeamName() {
+		return teamName;
+	}
+
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
 	}
 
 	public String getId() {

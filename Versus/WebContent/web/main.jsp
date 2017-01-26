@@ -50,6 +50,8 @@
 	String id;
 	String nickName;
 	int teamCode;
+	String teamName;
+	
 %>
 <%
 	if(request.getAttribute("memberInfo")!= null){
@@ -57,6 +59,8 @@
 		dto = (InputMemberInfoDto)request.getAttribute("memberInfo") ;
 		teamCode = dto.getTeamCode();
 		session.setAttribute("teamCode",teamCode);
+		teamName = dto.getTeamName();
+		session.setAttribute("teamName",teamName);
 		nickName = dto.getNickName();
 		session.setAttribute("nickName",nickName);
 		id = dto.getId();
@@ -120,11 +124,11 @@
 		<div class="clearfix"></div>
 		<div class="banner-bottom-login">
 			<div class="w3agile_banner_btom_login">
-				<form action="searchMatch.do" method="post">
+				<form action="searchMatch.do" name="searchMatchForm" method="post" class="searchClass">
 					<div class="w3agile__text w3agile_banner_btom_login_left city">
 						<h4>지역</h4>
 						<select class="frm-field required country choice_region1" name="region1">
-							<option value="">선택</option><option value="서울">서울</option><option value="경기">경기</option>
+							<option value="" selected>선택</option><option value="서울">서울</option><option value="경기">경기</option>
 							<option value="인천">인천</option><option value="강원">강원</option><option value="광주">광주</option>
 							<option value="충북">충북</option><option value="충남">충남</option><option value="대구">대구</option>
 							<option value="대전">대전</option><option value="경북">경북</option><option value="경남">경남</option>
@@ -141,14 +145,14 @@
 					<div class="w3agile__text w3agile_banner_btom_login_left2">
 						<h4>날짜</h4>
 						<select name="search_month" class="selOpt">
-							<option value="">월</option><option value="1">1</option><option value="2">2</option>
+							<option value="" selected>월</option><option value="1">1</option><option value="2">2</option>
 							<option value="3">3</option><option value="4">4</option><option value="5">5</option>
 							<option value="6">6</option><option value="7">7</option><option value="8">8</option>
 							<option value="9">9</option><option value="10">10</option><option value="11">11</option>
 							<option value="12">12</option>
 						</select>
 						<select name="search_day" class="selOpt">
-							<option value="">일</option><option value="1">1</option><option value="2">2</option>
+							<option value="" selected>일</option><option value="1">1</option><option value="2">2</option>
 							<option value="3">3</option><option value="4">4</option><option value="5">5</option>
 							<option value="6">6</option><option value="7">7</option><option value="8">8</option>
 							<option value="9">9</option><option value="10">10</option><option value="11">11</option>
@@ -165,7 +169,7 @@
 					<div class="w3agile__text w3agile_banner_btom_login_left1">
 						<h4>시간</h4>
 						<select id="country1" class="frm-field required time1" name="time1">
-							<option value="">시</option><option value="00">00</option><option value="01">01</option>
+							<option value="" selected>시</option><option value="00">00</option><option value="01">01</option>
 							<option value="02">02</option><option value="03">03</option><option value="04">04</option>
 							<option value="05">05</option><option value="06">06</option><option value="07">07</option>
 							<option value="08">08</option><option value="09">09</option><option value="10">10</option>
@@ -176,7 +180,7 @@
 							<option value="23">23</option><option value="24">24</option>
 						</select> <span>~</span> 
 						<select id="country2" class="frm-field required time2" name="time2">
-							<option value="">시</option><option value="00">00</option><option value="01">01</option>
+							<option value="" selected>시</option><option value="00">00</option><option value="01">01</option>
 							<option value="02">02</option><option value="03">03</option><option value="04">04</option>
 							<option value="05">05</option><option value="06">06</option><option value="07">07</option>
 							<option value="08">08</option><option value="09">09</option><option value="10">10</option>
@@ -247,18 +251,22 @@
 			<div id="team_information${MatchStatus.count}" class="team_information mfp-hide w3ls_small_dialog">
 				<h2>경기 정보</h2>
 				<div class="modal-body agileits_modal_body">
-				<form action="#">
-					<span class="teamdata" id="teamdata_name">팀이름 : </span><span class="teamdata" id="teamdata_name1">${MatchDto.team_name}</span><br>
-					<span class="teamdata" id="teamdata_place">장소 : </span><span class="teamdata" id="teamdata_place1">${MatchDto.match_region}</span><br>
-					<span class="teamdata" id="teamdata_date">일시 : </span><span class="teamdata" id="teamdata_date1">
+				<form action="#" id="team_information_apply${MatchStatus.count}">
+					<input type="hidden" value="${MatchDto.match_num}" id="teamdata_code${MatchStatus.count}">
+					<input type="hidden" value="<%=session.getAttribute("teamCode")%>" class="session_teamCode">
+					<input type="hidden" value="<%=session.getAttribute("nickName")%>" class="session_nickName">
+					<input type="hidden" value="<%=session.getAttribute("teamName")%>" class="session_teamName">
+					<span class="teamdata" id="teamdata_name">팀이름 : </span><span class="teamdata" id="teamdata_name${MatchStatus.count}">${MatchDto.team_name}</span><br>
+					<span class="teamdata" id="teamdata_place">장소 : </span><span class="teamdata" id="teamdata_place${MatchStatus.count}">${MatchDto.match_region}</span><br>
+					<span class="teamdata" id="teamdata_date">일시 : </span><span class="teamdata" id="teamdata_date${MatchStatus.count}">
 						<c:forTokens var="HM" items="${MatchDto.match_date}" delims=":" begin="0" end="1" varStatus="status">
 							${HM}<c:if test="${status.count == 1}"> :</c:if>
 						</c:forTokens>
 					</span><br>
-					<span class="teamdata" id="teamdata_level">팀정보 : </span><span class="teamdata" id="teamdata_level1">Lv ${MatchDto.level}, ${MatchDto.win}승 ${MatchDto.lose}패 ${MatchDto.draw}무, 
+					<span class="teamdata" id="teamdata_level">팀정보 : </span><span class="teamdata" id="teamdata_level${MatchStatus.count}">Lv ${MatchDto.level}, ${MatchDto.win}승 ${MatchDto.lose}패 ${MatchDto.draw}무, 
 						경고횟수: ${MatchDto.penalty}</span><br>
-					<span class="teamdata" id="teamdata_phone">연락처 : </span><span class="teamdata" id="teamdata_phone1">${MatchDto.match_phone}</span><br>
-					<span class="teamdata" id="teamdata_uniform">유니폼색상 : </span><span class="teamdata" id="teamdata_uniform1">${MatchDto.uniform}</span><br>
+					<span class="teamdata" id="teamdata_phone">연락처 : </span><span class="teamdata" id="teamdata_phone${MatchStatus.count}">${MatchDto.match_phone}</span><br>
+					<span class="teamdata" id="teamdata_uniform">유니폼색상 : </span><span class="teamdata" id="teamdata_uniform${MatchStatus.count}">${MatchDto.uniform}</span><br>
 					<div class="teamdata_con">
 						<c:choose>
 							<c:when test="${MatchDto.shower == '1'}"><input type="checkbox" disabled value="shower">샤워실</c:when>
@@ -286,12 +294,19 @@
 					<%if((session.getAttribute("memberInfo")==null)||((Integer)session.getAttribute("teamCode")==0)){
 						%><a href="#make_match" class="apply_error popup-with-zoom-anim">신청하기</a><%
 					}else{
-						%><input type="submit" value="신청하기"><%
+						%><input type="button" value="신청하기" class="apply_error btn_apply_match${MatchStatus.count}" onclick="apply_button(${MatchStatus.count})"><%
 					} %> 
-					<c:forEach items="${matchComment}" var="Comment">
-						
-						<table id="commentTable" class="table table-condensed"></table>
-					</c:forEach>
+					<table id="commentTable${MatchStatus.count}" class="table table-condensed commentTable">
+						<c:forEach items="${matchComment}" var="Comment">
+							<c:if test="${Comment.match_num eq MatchDto.match_num}">
+								<tr>
+									<td>${Comment.team_name}</td>
+									<td>${Comment.nickName}</td>
+									<td>${Comment.comment}</td>
+								</tr>
+							</c:if>
+						</c:forEach>
+					</table>
 				</form>
 				</div>
 			</div>
@@ -317,12 +332,42 @@
 	<!-- banner -->
 	<script type='text/javascript' src='js/jquery.easing.1.3.js'></script>
 	<script type='text/javascript' src='js/fluid_dg.min.js'></script>
-	<script type='text/javascript' src='js/versus.js'></script>
+	<script type='text/javascript' src='js/versus.js' charset="utf-8"></script>
 	<!-- //banner -->
 	<!-- nav -->
 	<script type="text/javascript">
 	//지역별 검색옵션 이벤트
+	
+	function apply_button(match_num){
+			
+		$.ajax({
+			type:"post",
+			url:"matchApply.ajax",
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			data:{
+				match_code : $('#teamdata_code'+match_num).val(),
+				teamCode : $('.session_teamCode').val(),
+				nickName : $('.session_nickName').val()
+			},
+			datatype:"json",
+			success:function(data){
+				appendComment(match_num);
+			},
+			error:function(data){
+				alert('error');
+			}
+		});
+	}
+
+	function appendComment(match_num){
+		var str1="경기 신청합니다.";
+		var str = "<tr><td>"+$('.session_teamName').val()+"</td><td>"+$('.session_nickName').val()+"</td>" +
+		"<td>"+str1+"</td></tr>";
+		$('#commentTable'+match_num).append(str);
+	}
+	
 	$(function(){
+		
 		
 		var seoul = ["강남구","강동구","강북구","강서구","관악구","광진구","구로구","금천구","노원구",
 					"도봉구","동대문구","동작구","마포구","서대문구","서초구","성동구","성북구","송파구","양천구",

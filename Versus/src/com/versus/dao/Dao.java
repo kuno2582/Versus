@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import com.versus.dto.CommentDto;
 import com.versus.dto.InputMemberInfoDto;
 import com.versus.dto.MatchDto;
-import com.versus.dto.SignUpCheckIdDto;
-import com.versus.dto.TeamDto;
 
 public class Dao {
 
@@ -84,7 +82,7 @@ public class Dao {
 			Class.forName("com.mysql.jdbc.Driver");		//mysql을 사용
 			connection = DriverManager.getConnection(URL, USER, PASS);		//아이디, 비밀번호, 주소를 넣고 연결
 			
-			String query = "SELECT * FROM member_info where ID=?";
+			String query = "SELECT * FROM member_info JOIN team_info on member_info.team_code=team_info.team_code where member_info.ID=?";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, requestId);
 			resultSet = preparedStatement.executeQuery();
@@ -95,10 +93,11 @@ public class Dao {
 				String nickName = resultSet.getString("NICKNAME");
 				String region = resultSet.getString("REGION");
 				int team_code = resultSet.getInt("TEAM_CODE");
+				String team_name = resultSet.getString("team_name");
 				Boolean leader = resultSet.getBoolean("leader");
 				Boolean second_leader = resultSet.getBoolean("second_leader");
 				
-				dto = new InputMemberInfoDto(id, nickName, region, team_code, leader, second_leader);
+				dto = new InputMemberInfoDto(id, nickName, region, team_code, team_name, leader, second_leader);
 
 			}
 			
@@ -392,7 +391,7 @@ public class Dao {
 			Statement stat = connection.createStatement();
 			stat.executeQuery(query);
 			
-			query = "select * from comment";
+			query = "SELECT * FROM comment JOIN team_info on comment.team_code=team_info.team_code";
 			
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
@@ -420,7 +419,63 @@ public class Dao {
 				e.printStackTrace();
 			}
 		}
-		
 		return dtos;
+		
+	}//matchComment
+	
+	public void applyMatch(int matchCode, int teamCode, String nickName){
+		
+		String URL = "jdbc:mysql://localhost:3306/versus?useUnicode=true&characterEncoding=euc-kr";		
+		String USER = "root";							
+		String PASS="apmsetup";		
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try{
+			Class.forName("com.mysql.jdbc.Driver");	
+			connection = DriverManager.getConnection(URL, USER, PASS);
+			String query = "SET NAMES euckr";
+			Statement stat = connection.createStatement();
+			stat.executeQuery(query);
+			
+			query = "INSERT INTO comment(MATCH_NUM, TEAM_CODE, NICKNAME, APPLICATION, COMMENT) VALUES (?, ?, ?, ?, ?)";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, matchCode);	//쿼리문 ? 내용
+			preparedStatement.setInt(2, teamCode);
+			preparedStatement.setString(3, nickName);
+			preparedStatement.setInt(4, 1);
+			preparedStatement.setString(5, "경기 신청합니다.");
+			preparedStatement.executeUpdate();
+			
+			/*query = "SELECT * FROM comment JOIN team_info on comment.team_code=team_info.team_code where "+
+					"comment.MATCH_NUM = ?";
+			preparedStatement = connection.prepareStatement(query);
+			
+			
+			while(resultSet.next()){
+				
+				int match_num = resultSet.getInt("match_num");
+				int team_code = resultSet.getInt("team_code");
+				String team_name = resultSet.getString("team_name");
+				String nickName = resultSet.getString("NICKNAME");
+				Boolean application = resultSet.getBoolean("APPLICATION");
+				String comment = resultSet.getString("COMMENT");
+				CommentDto dto = new CommentDto(match_num,team_code,team_name,nickName,application,comment);
+				dtos.add(dto);
+			}*/
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try{
+				if(resultSet!=null)resultSet.close();
+				if(preparedStatement!=null)preparedStatement.close();
+				if(connection!=null)connection.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
 	}
 }

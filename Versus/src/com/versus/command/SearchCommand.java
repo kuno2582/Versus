@@ -63,6 +63,7 @@ public class SearchCommand implements Command {
 		ArrayList<CommentDto> comment_dtos = dao.matchComment();
 		
 		request.setAttribute("list", dtos);
+		request.setAttribute("matchComment", comment_dtos);
 	}
 
 }

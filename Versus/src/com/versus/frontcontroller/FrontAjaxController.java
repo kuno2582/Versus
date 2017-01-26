@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.versus.command.ApplyMatch;
 import com.versus.command.Command;
 import com.versus.command.SignUpCheck;
 
@@ -29,7 +30,7 @@ public class FrontAjaxController extends HttpServlet {
 
 	protected void actionDo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.setCharacterEncoding("EUC-KR");
+		request.setCharacterEncoding("UTF-8");
 		
 		Command command = null;
 		
@@ -44,9 +45,13 @@ public class FrontAjaxController extends HttpServlet {
 		}
 		
 		System.out.println("command: " + comm);
+		System.out.println(request.getParameter("nickName"));
 		
 		if(comm.equals("signUpCheck.ajax")){
 			command = new SignUpCheck();
+			command.execute(request, response);
+		}if(comm.equals("matchApply.ajax")){
+			command = new ApplyMatch();
 			command.execute(request, response);
 		}
 		

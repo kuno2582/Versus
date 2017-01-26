@@ -682,7 +682,7 @@ opacity: .1;
 	width: 70px;
 }
 .team_information {
-	background: #fff;
+	background: #f5f5f5;
 }
 
 #make_match{
@@ -775,13 +775,11 @@ opacity: .1;
 	padding: 4px 9px;
 	font-size: 12px;
 }
-#commentTable {
+.commentTable {
 	margin-bottom: 5px;
 	border: 1px solid gray;
 }
-#commentTable td {
-	border: 1px solid gray;
-}
+
 .form-group {
 	display: inline-block;
 	float: right;
