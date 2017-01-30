@@ -123,15 +123,14 @@ String anim_class="";
 		</div>
 		<div class="footer_nav">
 		<%if(session.getAttribute("memberInfo")==null){
-				ft_nav2="#make-team";
-				ft_nav3="#make-team";
-				anim_class="popup-with-zoom-anim";
-			}else if(session.getAttribute("memberInfo")!=null){
-				ft_nav2="matchstatus.jsp";
-				ft_nav3="info.jsp";
-				anim_class="";
-			}
-		%>
+			ft_nav2="#make-team";
+			ft_nav3="#make-team";
+			anim_class="popup-with-zoom-anim";
+		}else if(session.getAttribute("memberInfo")!=null){
+			ft_nav2="matchStatus.do?teamCode="+session.getAttribute("teamCode");
+			ft_nav3="info.jsp";
+			anim_class="";
+		}%>
 			<!-- <div class="ft_con"> -->
 				<div class="ft_nav1"><a href="main.jsp"><img src="images/matching.png" width="40px" height="40px"></a></div>
 				<div class="ft_nav2"><a href="<%=ft_nav2%>" class="<%=anim_class%>"><img src="images/status.png" width="40px" height="40px"></a></div>

@@ -1091,6 +1091,7 @@ opacity: .1;
 	display: inline-block;
 	padding-left: 10px;
 	border: 1px solid gray;
+	overflow: scroll;
 }
 #faq-div {
 	width: 90%;
@@ -1124,7 +1125,7 @@ opacity: .1;
 }
 .status-list span {
 	display: inline-block;
-	font-size: 14pt;
+	font-size: 10pt;
 	margin-left: 10px;
 	height: 25px;
 }
