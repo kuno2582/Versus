@@ -2230,8 +2230,9 @@ ul.contact_info li a:hover{
 #signUpPwCk {
 	display: inline-block;
 }
-.w3_modal_body_grid input[name="ID"], .w3_modal_body_grid input[type="password"], .w3_modal_body_grid input[name="team-name"] {
-	width: 50%;
+.w3_modal_body_grid input[name="ID"], .w3_modal_body_grid input[type="password"], .w3_modal_body_grid input[name="team-name"],
+.w3_modal_body_grid input[name="team_code"] {
+	width: 40%;
 }
 .w3_modal_body_grid1{
 	margin:1em 0;

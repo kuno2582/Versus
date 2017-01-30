@@ -47,6 +47,12 @@
 <!-- //web-fonts -->
 
 </head>
+<body class="bg">
+<%!
+String ft_nav2="matchstatus.jsp";
+String ft_nav3="info.jsp";
+String anim_class="";
+%>
 	<jsp:include page="login.jsp" flush="true"/>
 	<jsp:include page="maketeam.jsp" flush="true"/>
 	<div class="nav-container hidden hideNav w3_nav">
@@ -76,11 +82,21 @@
 		</div>
 		<div class="agileinfo_menu_right">
 			<ul>
-				<li><a href="#small-dialog"
-					class="play-icon popup-with-zoom-anim"><img
-						src="images/login.png" width="35px" height="35px"></a></li>
+				<%
+				if( session.getAttribute("memberInfo") == null){%>
+					<li>
+						<a href="#small-dialog"
+						class="play-icon popup-with-zoom-anim"><img
+							src="images/login.png" width="35px" height="35px"></a>
+					</li>
+				<% }else{%> 
+				
+					<li>	
+						<div class="info_id"><a href="logout.do">${memberInfo.id}</a></div>
+						<!-- <img src="images/close.png" width="30px" height="30px"> -->
+					</li>
+				<%}%>
 			</ul>
-
 		</div>
 		<div class="clearfix"></div>
 		
@@ -107,10 +123,20 @@
 		</div>
 		
 		<div class="footer_nav">
+				<%if(session.getAttribute("memberInfo")==null){
+						ft_nav2="#make-team";
+						ft_nav3="#make-team";
+						anim_class="popup-with-zoom-anim";
+					}else if(session.getAttribute("memberInfo")!=null){
+						ft_nav2="matchstatus.jsp";
+						ft_nav3="info.jsp";
+						anim_class="";
+					}
+				%>
 			<!-- <div class="ft_con"> -->
 				<div class="ft_nav1"><a href="main.jsp"><img src="images/matching.png" width="40px" height="40px"></a></div>
-				<div class="ft_nav2"><a href="matchstatus.jsp"><img src="images/status.png" width="40px" height="40px"></a></div>
-				<div class="ft_nav3"><a href="info.jsp"><img src="images/teamInfo.png" width="40px" height="40px"></a></div>
+				<div class="ft_nav2"><a href="<%=ft_nav2%>" class="<%=anim_class%>"><img src="images/status.png" width="40px" height="40px"></a></div>
+				<div class="ft_nav3"><a href="<%=ft_nav3%>" class="<%=anim_class%>"><img src="images/teamInfo.png" width="40px" height="40px"></a></div>
 				<div class="ft_nav4"><a href="faq.jsp"><img src="images/qna.png" width="40px" height="40px"></a></div>
 			<!-- </div> -->
 		</div>

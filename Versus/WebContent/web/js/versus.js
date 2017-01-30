@@ -1,22 +1,5 @@
 $(window).load(function() {
 	
-	$('#id_check').click(function(){
-		var id_check = $('#idCheck1').val();
-		$.ajax({
-			type:'GET',
-			url:"signUpCheck.ajax",
-			data:{"id":id_check},
-			contentType: "application/x-www-form-urlencoded; charset=EUC-KR",
-			success:function(data){
-				if(data){
-					alert("이미 있는 아이디");
-				}else{
-					alert("없는 아이디");
-				}
-			}
-		});
-	});
-	
 	function fixBanBtnPadding(){
 		var banheight = $('#ban').height();
 		banheight += 20;
@@ -81,28 +64,6 @@ $(window).load(function() {
 			$(".nav-container").toggleClass("showNav hideNav");
 			$(".btn-nav").toggleClass("animated");
 	});
-	
-	/*$.ajax({
-		type:"post",
-		url:"searchMatch.do",
-		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-		data:{
-			region1 : searchMatchForm.region1.value,
-			region2 : searchMatchForm.region2.value,
-			search_month : searchMatchForm.search_month.value,
-			search_day : searchMatchForm.search_day.value,
-			time1 : searchMatchForm.time1.value,
-			time2 : searchMatchForm.time2.value
-		},
-		datatype:"json",
-		success:function(){
-			firstLoad = false;
-			location.href="main.jsp";
-		},
-		fail:function(){
-			alert('실패');
-		}
-	});*/
 	
 });
 

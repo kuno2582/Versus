@@ -45,12 +45,14 @@ public class FrontAjaxController extends HttpServlet {
 		}
 		
 		System.out.println("command: " + comm);
-		System.out.println(request.getParameter("nickName"));
 		
 		if(comm.equals("signUpCheck.ajax")){
 			command = new SignUpCheck();
 			command.execute(request, response);
 		}if(comm.equals("matchApply.ajax")){
+			command = new ApplyMatch();
+			command.execute(request, response);
+		}if(comm.equals("searchMatch.ajax")){
 			command = new ApplyMatch();
 			command.execute(request, response);
 		}

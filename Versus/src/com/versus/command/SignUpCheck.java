@@ -1,22 +1,30 @@
 package com.versus.command;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
+
 import com.versus.dao.Dao;
-import com.versus.dto.SignUpCheckIdDto;
-import com.versus.dto.TeamDto;
 
 public class SignUpCheck implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		
-		Dao dao = new Dao();
-
-		dao.signUpCheckId();
+		String checkId = request.getParameter("id");
+		
+		try {
+			JSONObject jsonResult = new JSONObject();
+			Dao dao = new Dao();
+			String result1 = dao.signUpCheckId(checkId);
+			jsonResult.put("result",result1);
+			response.setContentType("application/x-json;charset=utf-8");
+			response.getWriter().print(jsonResult);
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		
 		
 	}
 

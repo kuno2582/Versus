@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="com.versus.dto.InputMemberInfoDto"%>
-<%@ page import="com.versus.dto.MatchDto"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -44,37 +43,15 @@
 <!-- //web-fonts -->
 
 </head>
-<%!
-	InputMemberInfoDto dto;
-	MatchDto match_dtos;
-	String id;
-	String nickName;
-	int teamCode;
-	String teamName;
-	
-%>
-<%
-	if(request.getAttribute("memberInfo")!= null){
-		session.setAttribute("memberInfo",request.getAttribute("memberInfo"));
-		dto = (InputMemberInfoDto)request.getAttribute("memberInfo") ;
-		teamCode = dto.getTeamCode();
-		session.setAttribute("teamCode",teamCode);
-		teamName = dto.getTeamName();
-		session.setAttribute("teamName",teamName);
-		nickName = dto.getNickName();
-		session.setAttribute("nickName",nickName);
-		id = dto.getId();
-		session.setAttribute("id",id);
-		System.out.println("로그인후 세션에 정보 저장!");
-	}
-	if(request.getAttribute("logout") != null){
-		if((String)request.getAttribute("logout") == "logout"){
-			session.setAttribute("memberInfo",null);
-			System.out.println("세션의 정보 삭제");
-		}
-	}
-%>
+
 <body class="bg">
+<%!
+String ft_nav2="matchstatus.jsp";
+String ft_nav3="info.jsp";
+String anim_class="";
+Boolean firstLoad = false;
+%>
+<%if(request.getAttribute("list")!=null)firstLoad=true; %>
 	<jsp:include page="login.jsp" flush="true"/>
 	<jsp:include page="maketeam.jsp" flush="true"/>
 	<jsp:include page="makematch.jsp" flush="true"/>
@@ -115,7 +92,7 @@
 				<% }else{%> 
 				
 					<li>	
-						<div class="info_id"><a href="logout.do?nowPage=main.jsp">${memberInfo.id}</a></div>
+						<div class="info_id"><a href="logout.do">${memberInfo.id}</a></div>
 						<!-- <img src="images/close.png" width="30px" height="30px"> -->
 					</li>
 				<%}%>
@@ -316,9 +293,19 @@
 		<!-- 경기 만들기 -->
 		<div class="footer_nav">
 			<!-- <div class="ft_con"> -->
+				<%if(session.getAttribute("memberInfo")==null){
+					ft_nav2="#make_match";
+					ft_nav3="#make_match";
+					anim_class="popup-with-zoom-anim";
+				}else if(session.getAttribute("memberInfo")!=null){
+					ft_nav2="matchStatus.do?teamCode="+session.getAttribute("teamCode");
+					ft_nav3="info.jsp";
+					anim_class="";
+				}
+				%>
 				<div class="ft_nav1"><a href="main.jsp"><img src="images/matching.png" width="40px" height="40px"></a></div>
-				<div class="ft_nav2"><a href="matchstatus.jsp"><img src="images/status.png" width="40px" height="40px"></a></div>
-				<div class="ft_nav3"><a href="info.jsp"><img src="images/teamInfo.png" width="40px" height="40px"></a></div>
+				<div class="ft_nav2"><a href="<%=ft_nav2%>" class="<%=anim_class%>"><img src="images/status.png" width="40px" height="40px"></a></div>
+				<div class="ft_nav3"><a href="<%=ft_nav3%>" class="<%=anim_class%>"><img src="images/teamInfo.png" width="40px" height="40px"></a></div>
 				<div class="ft_nav4"><a href="faq.jsp"><img src="images/qna.png" width="40px" height="40px"></a></div>
 			<!-- </div> -->
 		</div>
@@ -336,10 +323,14 @@
 	<!-- //banner -->
 	<!-- nav -->
 	<script type="text/javascript">
-	//지역별 검색옵션 이벤트
+	//첫 로드시 경기정보 불러오기
+	var firstLoad = <%=!firstLoad%>;
+	if(firstLoad){
+		$(searchMatchForm).submit();
+	}
 	
+	//경기신청 에이잭스
 	function apply_button(match_num){
-			
 		$.ajax({
 			type:"post",
 			url:"matchApply.ajax",
@@ -358,7 +349,24 @@
 			}
 		});
 	}
+	
+	//회원가입 아이디 중복확인
+	$('#id_check').click(function(){
+		var id_check = $('#idCheck1').val();
+		$.ajax({
+			type:'GET',
+			url:"signUpCheck.ajax",
+			data:{"id":id_check},
+			datatype:"JSON",
+			contentType: "application/x-www-form-urlencoded; charset=EUC-KR",
+			success:function(obj){
+				
+				alert(obj.result);
+			}
+		});
+	});
 
+	//경기신청시 댓글달기
 	function appendComment(match_num){
 		var str1="경기 신청합니다.";
 		var str = "<tr><td>"+$('.session_teamName').val()+"</td><td>"+$('.session_nickName').val()+"</td>" +
@@ -366,9 +374,9 @@
 		$('#commentTable'+match_num).append(str);
 	}
 	
+	//지역별 검색 옵션 이벤트
 	$(function(){
-		
-		
+	
 		var seoul = ["강남구","강동구","강북구","강서구","관악구","광진구","구로구","금천구","노원구",
 					"도봉구","동대문구","동작구","마포구","서대문구","서초구","성동구","성북구","송파구","양천구",
 					"영등포구","용산구","은평구","종로구","중구","중랑구"];

@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.versus.dao.Dao;
+import com.versus.dto.InputMemberInfoDto;
 
 public class MakeTeamCommand implements Command {
 
@@ -17,6 +18,9 @@ public class MakeTeamCommand implements Command {
 		
 		Dao dao = new Dao();
 		dao.makeTeam(team_name, leader_id, team_phone, team_region);
+		
+		InputMemberInfoDto dto = dao.inputMemberInfo(leader_id);
+		request.setAttribute("memberInfo", dto);
 		
 	}
 

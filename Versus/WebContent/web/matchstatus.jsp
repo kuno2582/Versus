@@ -78,11 +78,21 @@
 		</div>
 		<div class="agileinfo_menu_right">
 			<ul>
-				<li><a href="#small-dialog"
-					class="play-icon popup-with-zoom-anim"><img
-						src="images/login.png" width="35px" height="35px"></a></li>
+				<%
+				if( session.getAttribute("memberInfo") == null){%>
+					<li>
+						<a href="#small-dialog"
+						class="play-icon popup-with-zoom-anim"><img
+							src="images/login.png" width="35px" height="35px"></a>
+					</li>
+				<% }else{%> 
+				
+					<li>	
+						<div class="info_id"><a href="logout.do">${memberInfo.id}</a></div>
+						<!-- <img src="images/close.png" width="30px" height="30px"> -->
+					</li>
+				<%}%>
 			</ul>
-
 		</div>
 		<div class="clearfix"></div>
 		

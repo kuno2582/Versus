@@ -99,6 +99,8 @@ public class Dao {
 				
 				dto = new InputMemberInfoDto(id, nickName, region, team_code, team_name, leader, second_leader);
 
+			}else{
+				System.out.println(requestId);
 			}
 			
 		}catch(Exception e){
@@ -118,10 +120,49 @@ public class Dao {
 		
 	}//InputMemberInfoDto
 	
-	public Boolean signUpCheckId(){
+	public String signUpCheckId(String checkId){
+
+		String URL = "jdbc:mysql://localhost:3306/versus?useUnicode=true&characterEncoding=euc-kr";		
+		String USER = "root";							
+		String PASS="apmsetup";		
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
 		
-		return true;
-	}	//signUpCheckId
+		String result = "아이디를 사용할 수 있습니다.";
+		
+		try{
+			
+			Class.forName("com.mysql.jdbc.Driver");	
+			connection = DriverManager.getConnection(URL, USER, PASS);
+			String query = "SET NAMES euckr";
+			Statement stat = connection.createStatement();
+			stat.executeQuery(query);
+			
+			query = "SELECT * FROM member_info WHERE ID = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, checkId);	//쿼리문 ? 내용
+			resultSet = preparedStatement.executeQuery();
+			
+			if(resultSet.next()){
+				result = "이미 아이디가 존재합니다.";
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			result="실패";
+		}finally{
+			try{
+				if(resultSet!=null)resultSet.close();
+				if(preparedStatement!=null)preparedStatement.close();
+				if(connection!=null)connection.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		return result;
+	} 	//signUpCheckId
 	/*
 	public ArrayList<TeamDto> signUpCheckTeam(){
 		
@@ -217,6 +258,11 @@ public class Dao {
 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
+		PreparedStatement preparedStatement2 = null;
+		PreparedStatement preparedStatement3 = null;
+		PreparedStatement preparedStatement4 = null;
+		ResultSet resultSet = null;
+		ResultSet resultSet2 = null;
 		
 		try{
 			
@@ -226,18 +272,45 @@ public class Dao {
 			Statement stat = connection.createStatement();
 			stat.executeQuery(query);
 			
-			query = "INSERT INTO team_info(TEAM_NAME, LEADER_ID, PHONE, REGION) VALUES (?, ?, ?, ?)";
+			query = "SELECT * FROM team_info WHERE TEAM_NAME = ?";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, team_name);	//쿼리문 ? 내용
-			preparedStatement.setString(2, leader_id);
-			preparedStatement.setString(3, team_phone);
-			preparedStatement.setString(4, team_region);
-			preparedStatement.executeUpdate();
-			
+			resultSet = preparedStatement.executeQuery();
+			if(resultSet.next()){
+				System.out.println("dao.makeTeam(), 이미 팀이 존재합니다.");
+			}else{
+				query = "INSERT INTO team_info(TEAM_NAME, LEADER_ID, PHONE, REGION) VALUES (?, ?, ?, ?)";
+				preparedStatement2 = connection.prepareStatement(query);
+				preparedStatement2.setString(1, team_name);	//쿼리문 ? 내용
+				preparedStatement2.setString(2, leader_id);
+				preparedStatement2.setString(3, team_phone);
+				preparedStatement2.setString(4, team_region);
+				preparedStatement2.executeUpdate();
+				
+				query="SELECT * FROM team_info WHERE TEAM_NAME = ?";
+				preparedStatement3 = connection.prepareStatement(query);
+				preparedStatement3.setString(1, team_name);
+				resultSet2 = preparedStatement3.executeQuery();
+				int team_code = 0;
+				if(resultSet2.next()){
+					team_code = resultSet2.getInt("TEAM_CODE");
+				}
+				
+				query = "UPDATE member_info SET LEADER=1,TEAM_CODE=? WHERE ID=?";
+				preparedStatement4 = connection.prepareStatement(query);
+				preparedStatement4.setInt(1, team_code);
+				preparedStatement4.setString(2, leader_id);
+				preparedStatement4.executeUpdate();
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
 			try{
+				if(preparedStatement4!=null)preparedStatement4.close();
+				if(resultSet2!=null)resultSet2.close();
+				if(preparedStatement3!=null)preparedStatement3.close();
+				if(preparedStatement2!=null)preparedStatement2.close();
+				if(resultSet!=null)resultSet.close();
 				if(preparedStatement!=null)preparedStatement.close();
 				if(connection!=null)connection.close();
 			}catch(Exception e){

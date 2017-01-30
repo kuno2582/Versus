@@ -7,13 +7,13 @@
 	<%!int teamCode; 
 		InputMemberInfoDto dto;%>
 	<%
-	if(request.getAttribute("memberInfo") != null){
+	if(session.getAttribute("memberInfo") != null){
 		
-		dto = (InputMemberInfoDto)request.getAttribute("memberInfo") ;
+		dto = (InputMemberInfoDto)session.getAttribute("memberInfo") ;
 		teamCode = dto.getTeamCode();
 	}
 
-	if(request.getAttribute("memberInfo") == null){%>
+	if(session.getAttribute("memberInfo") == null){%>
 		<h2>먼저 로그인해야 합니다.</h2>
 		<a href="#small-dialog" class="play-icon popup-with-zoom-anim">로그인하러 가기</a>		
 	<%}else if(teamCode != 0){%>

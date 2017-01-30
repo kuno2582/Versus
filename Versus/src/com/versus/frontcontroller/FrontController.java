@@ -13,6 +13,7 @@ import com.versus.command.Command;
 import com.versus.command.LoginCheck;
 import com.versus.command.MakeMatchCommand;
 import com.versus.command.MakeTeamCommand;
+import com.versus.command.ProgressCommand;
 import com.versus.command.SearchCommand;
 import com.versus.command.SignUpCommand;
 
@@ -64,10 +65,10 @@ public class FrontController extends HttpServlet {
 		if(comm.equals("loginCheck.do")){
 			command = new LoginCheck();
 			command.execute(request,response);
-			viewPage = "main.jsp";
+			viewPage = "sessionPage.jsp";
 		}else if(comm.equals("logout.do")){
 			request.setAttribute("logout", "logout");
-			viewPage = request.getParameter("nowPage");
+			viewPage = "sessionPage.jsp";
 		}else if(comm.equals("signUp.do")){
 			command = new SignUpCommand();
 			command.execute(request, response);
@@ -84,6 +85,10 @@ public class FrontController extends HttpServlet {
 			command = new SearchCommand();
 			command.execute(request, response);
 			viewPage = "main.jsp";
+		}else if(comm.equals("matchStatus.do")){
+			command = new ProgressCommand();
+			command.execute(request, response);
+			viewPage = "sessionPage.jsp";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
