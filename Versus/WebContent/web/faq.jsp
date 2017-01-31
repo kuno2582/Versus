@@ -114,38 +114,65 @@ String anim_class="";
 		</div>
 		<p class="faq-p">FAQ</p>
 		<div id="faq-div">
-			
+			<c:forEach items="${FAQList}" var="FaqDto" varStatus="VarStatus">
+			<a href="#faq_list${VarStatus.count}" class="popup-with-zoom-anim">
+				<div class="faq-list">
+					<span class="faq_count" style="border:1px solid gray;">${VarStatus.count}</span>
+					<span class="faq_title" style="border:1px solid gray;">${FaqDto.faq_title}</span>
+				</div>
+			</a>
+			<div id="faq_list${VarStatus.count}" class="faqModal mfp-hide w3ls_small_dialog">
+				<h2>FAQ ${VarStatus.count}</h2>
+				<p>제목: ${FaqDto.faq_title}</p>
+				<p>내용: ${FaqDto.faq_content}</p>
+			</div>
+			</c:forEach>
 		</div>
 		<p class="faq-p">신고하기</p>
 		<div id="report-div">
+<<<<<<< HEAD
 			<span>팀이름: </span><input type="text" name="report-teamname"><input type="submit" value="신고">
 			<p>신고사유</p>
 			<div id="report-reason">
 			<div id="report-reason-wrap">아래 내용을 함께 보내주시면 더욱 빨리 처리가 가능합니다.<br>
-			 -팀이름: 피신고인 팀이름<br>
+			 -팀이름입니다.: 피신고인 팀이름<br>
 			 -신고게시물NO: 신고게시물의 번호 <br>
 			 -신고사유: 정확한 사유를 기입해주시면, 더욱 빠른 처리가 가능합니다.<br>
 			 (*허위 신고 시 신고인과 신고팀에게 패널티가 적용됩니다.)
 			 </div>
 			</div>
+=======
+			<form action="report.do" method="post">
+				<span>팀이름: </span><input type="text" name="report-teamname">
+				<%if(session.getAttribute("memberInfo")==null){%>
+					<a href="#make-team" class="popup-with-zoom-anim">
+						<input type="button" value="신고">
+					</a>
+				<%}else if(session.getAttribute("memberInfo")!=null){%>
+					<input type="submit" value="신고">
+				<%}%>
+				<p>신고사유</p>
+				<textarea id="report-reason" rows="6" cols="40" style="resize:none;">
+				</textarea>
+			</form>
+>>>>>>> branch 'master' of https://github.com/kuno2582/Versus
 		</div>
 		
 		<div class="footer_nav">
-				<%if(session.getAttribute("memberInfo")==null){
-						ft_nav2="#make-team";
-						ft_nav3="#make-team";
-						anim_class="popup-with-zoom-anim";
-					}else if(session.getAttribute("memberInfo")!=null){
-						ft_nav2="matchstatus.jsp";
-						ft_nav3="info.jsp";
-						anim_class="";
-					}
-				%>
+		<%if(session.getAttribute("memberInfo")==null){
+			ft_nav2="#make-team";
+			ft_nav3="#make-team";
+			anim_class="popup-with-zoom-anim";
+		}else if(session.getAttribute("memberInfo")!=null){
+			ft_nav2="matchStatus.do?teamCode="+session.getAttribute("teamCode");
+			ft_nav3="info.jsp";
+			anim_class="";
+		}%>
 			<!-- <div class="ft_con"> -->
 				<div class="ft_nav1"><a href="main.jsp"><img src="images/matching.png" width="40px" height="40px"></a></div>
 				<div class="ft_nav2"><a href="<%=ft_nav2%>" class="<%=anim_class%>"><img src="images/status.png" width="40px" height="40px"></a></div>
 				<div class="ft_nav3"><a href="<%=ft_nav3%>" class="<%=anim_class%>"><img src="images/teamInfo.png" width="40px" height="40px"></a></div>
-				<div class="ft_nav4"><a href="faq.jsp"><img src="images/qna.png" width="40px" height="40px"></a></div>
+				<div class="ft_nav4"><a href="faq.do"><img src="images/qna.png" width="40px" height="40px"></a></div>
 			<!-- </div> -->
 		</div>
 	</div>
