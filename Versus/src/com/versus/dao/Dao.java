@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import com.versus.dto.CommentDto;
+import com.versus.dto.FaqDto;
 import com.versus.dto.InputMemberInfoDto;
 import com.versus.dto.MatchDto;
 
@@ -550,5 +551,51 @@ public class Dao {
 				e.printStackTrace();
 			}
 		}
-	}
+	}//applyMatch()
+	
+	public ArrayList<FaqDto> faqGet(){
+		
+		String URL = "jdbc:mysql://localhost:3306/versus?useUnicode=true&characterEncoding=euc-kr";		
+		String USER = "root";							
+		String PASS="apmsetup";		
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		ArrayList<FaqDto> dtos = new ArrayList<FaqDto>();
+		
+		try{
+			
+			Class.forName("com.mysql.jdbc.Driver");	
+			connection = DriverManager.getConnection(URL, USER, PASS);
+			String query = "SET NAMES euckr";
+			Statement stat = connection.createStatement();
+			stat.executeQuery(query);
+			
+			query = "SELECT * FROM faq";
+			preparedStatement = connection.prepareStatement(query);
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()){
+				
+				String faq_title = resultSet.getString("FAQ_TITLE");
+				String faq_content = resultSet.getString("FAQ_CONTENT");
+				FaqDto dto = new FaqDto(faq_title,faq_content);
+				dtos.add(dto);
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try{
+				if(resultSet!=null)resultSet.close();
+				if(preparedStatement!=null)preparedStatement.close();
+				if(connection!=null)connection.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		return dtos;
+	}//faqGet()
 }

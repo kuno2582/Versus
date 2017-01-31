@@ -1093,6 +1093,7 @@ opacity: .1;
 	display: inline-block;
 	padding-left: 10px;
 	border: 1px solid gray;
+	overflow: scroll;
 }
 #faq-div {
 	border-radius:10px;
@@ -1101,6 +1102,16 @@ opacity: .1;
 	display: inline-block;
 	padding-left: 10px;
 	border: 1px solid gray;
+}
+.faq-list span{
+	float:left;
+	text-align:left;
+}
+.faqModal h2{
+	background: #F7DD2C;
+}
+.faqModal {
+	background: #fff;
 }
 #report-div {
 	border-radius:10px;
@@ -1138,7 +1149,7 @@ opacity: .1;
 }
 .status-list span {
 	display: inline-block;
-	font-size: 14pt;
+	font-size: 10pt;
 	margin-left: 10px;
 	height: 25px;
 }
