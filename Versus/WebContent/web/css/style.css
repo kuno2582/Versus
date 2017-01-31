@@ -1058,6 +1058,7 @@ opacity: .1;
 	float: left;
 	margin-left: 2.5%;
 	padding-top: 7px;
+
 }
 .bottom-teaminfo-center, .bottom-status-center {
 	display: inline-block;
@@ -1068,16 +1069,17 @@ opacity: .1;
 	width: 150px;
 }
 .tinfo-center-con {
+	height:40px;
 	width: 150px;
-	height: 40px;
 	display: table;
 }
 .con-cell {
-	display: table-cell;
-	font-size: 15pt;
-	vertical-align: middle;
+	height:40px;
+	font-family: 'Lora', serif;
+	font-size: 12pt;
 	color: white;
 }
+
 .bottom-teaminfo-right, .bottom-status-right {
 	display: inline-block;
 	height:40px;
@@ -1093,6 +1095,7 @@ opacity: .1;
 	border: 1px solid gray;
 }
 #faq-div {
+	border-radius:10px;
 	width: 90%;
 	height: 200px;
 	display: inline-block;
@@ -1100,6 +1103,7 @@ opacity: .1;
 	border: 1px solid gray;
 }
 #report-div {
+	border-radius:10px;
 	width: 90%;
 	height: 200px;
 	display: inline-block;
@@ -1107,8 +1111,18 @@ opacity: .1;
 	border: 1px solid gray;
 }
 #report-reason {
+	margin-left:auto;
+	margin-right:auto;
+	display:table;
+	margin-top:8px;
+	color:gray;
+	border-radius:10px;
 	height: 70%;
 	border: 1px solid gray;
+}
+#report-reason-wrap{
+	display:table-cell;
+	vertical-align:middle;
 }
 .status-success-p, .status-ing-p, .status-fail-p, .faq-p {
 	margin-top: 10px;
