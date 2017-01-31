@@ -51,7 +51,7 @@
 <%!
 String ft_nav2="matchstatus.jsp";
 String ft_nav3="info.jsp";
-String anim_class="1";
+String anim_class="";
 %>
 	<jsp:include page="login.jsp" flush="true"/>
 	<jsp:include page="maketeam.jsp" flush="true"/>
