@@ -19,33 +19,29 @@ public class SearchCommand implements Command {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		
-		String region1="";
-		String region2="";
-		if(request.getAttribute("region1")!=null){
-			region1 = request.getParameter("region1");
-			region2 = request.getParameter("region2");
-		}
-		String search_month_start = "1";
-		String search_month_end = "12";
-		if((request.getParameter("search_month") != "") && (request.getParameter("search_month")!=null)){
+		String region1 = request.getParameter("region1");
+		String region2 = request.getParameter("region2");
+		String search_month_start = "";
+		String search_month_end = "";
+		if(request.getParameter("search_month") == ""){
+			search_month_start = "1";
+			search_month_end = "12";
+		}else{
 			search_month_start = request.getParameter("search_month");
 			search_month_end = request.getParameter("search_month");
 		}
-		String search_day_start = "1";
-		String search_day_end = "31";
-		if((request.getParameter("search_day")!="") && (request.getParameter("search_day")!=null)){
+		String search_day_start = request.getParameter("search_day");
+		String search_day_end = "";
+		if(request.getParameter("search_day") == ""){
+			search_day_start = "1";
+			search_day_end = "31";
+		}else{
 			search_day_start = request.getParameter("search_day");
 			search_day_end = request.getParameter("search_day");
 		}
+		String time1 = request.getParameter("time1");if(time1 == "")time1="0";
+		String time2 = request.getParameter("time2");if(time2 == "")time2="23";
 		
-		String time1="0";
-		String time2="23";
-		if(request.getParameter("time1")!=null){
-			time1 = request.getParameter("time1");if(time1 == "")time1="0";
-		}
-		if(request.getParameter("time2")!=null){
-			time2 = request.getParameter("time2");if(time2 == "")time2="23";
-		}
 		Timestamp match_date1 = null;
 		Timestamp match_date2 = null;
 		try {

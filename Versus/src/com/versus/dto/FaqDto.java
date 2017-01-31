@@ -1,32 +1,23 @@
 package com.versus.dto;
 
 public class FaqDto {
-	String faq_title;
-	String faq_content;
+	String content;
 	
 	public FaqDto(){
 		
 	}
 	
-	public FaqDto(String faq_title, String faq_content){
-		this.faq_title = faq_title;
-		this.faq_content = faq_content;
+	public FaqDto(String content){
+		this.content = content;
 	}
 
-	public String getFaq_title() {
-		return faq_title;
+	public String getContent() {
+		return content;
 	}
 
-	public void setFaq_title(String faq_title) {
-		this.faq_title = faq_title;
+	public void setContent(String content) {
+		this.content = content;
 	}
-
-	public String getFaq_content() {
-		return faq_content;
-	}
-
-	public void setFaq_content(String faq_content) {
-		this.faq_content = faq_content;
-	}
-
+	
+	
 }

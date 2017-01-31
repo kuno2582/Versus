@@ -265,7 +265,8 @@ Boolean firstLoad = false;
 					<span>- 상세정보 -</span><br>
 					<span id="teamdata_more">${MatchDto.more_info}</span>
 					<div class="teamdata_con">
-						<div id="teamdata_map"></div>
+						<div id="teamdata_map">
+						</div>
 					</div>
 					<%if((session.getAttribute("memberInfo")==null)||((Integer)session.getAttribute("teamCode")==0)){
 						%><a href="#make_match" class="apply_error popup-with-zoom-anim">신청하기</a><%
@@ -293,18 +294,19 @@ Boolean firstLoad = false;
 		<div class="footer_nav">
 			<!-- <div class="ft_con"> -->
 				<%if(session.getAttribute("memberInfo")==null){
-					ft_nav2="#make-team";
-					ft_nav3="#make-team";
+					ft_nav2="#make_match";
+					ft_nav3="#make_match";
 					anim_class="popup-with-zoom-anim";
 				}else if(session.getAttribute("memberInfo")!=null){
 					ft_nav2="matchStatus.do?teamCode="+session.getAttribute("teamCode");
 					ft_nav3="info.jsp";
 					anim_class="";
-				}%>
+				}
+				%>
 				<div class="ft_nav1"><a href="main.jsp"><img src="images/matching.png" width="40px" height="40px"></a></div>
 				<div class="ft_nav2"><a href="<%=ft_nav2%>" class="<%=anim_class%>"><img src="images/status.png" width="40px" height="40px"></a></div>
 				<div class="ft_nav3"><a href="<%=ft_nav3%>" class="<%=anim_class%>"><img src="images/teamInfo.png" width="40px" height="40px"></a></div>
-				<div class="ft_nav4"><a href="faq.do"><img src="images/qna.png" width="40px" height="40px"></a></div>
+				<div class="ft_nav4"><a href="faq.jsp"><img src="images/qna.png" width="40px" height="40px"></a></div>
 			<!-- </div> -->
 		</div>
 		<div class="footer-pos">

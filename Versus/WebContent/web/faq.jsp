@@ -44,7 +44,9 @@
 <link
 	href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic'
 	rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet"> 	
 <!-- //web-fonts -->
+<!--  -->
 
 </head>
 <body class="bg">
@@ -128,6 +130,18 @@ String anim_class="";
 		</div>
 		<p class="faq-p">신고하기</p>
 		<div id="report-div">
+<<<<<<< HEAD
+			<span>팀이름: </span><input type="text" name="report-teamname"><input type="submit" value="신고">
+			<p>신고사유</p>
+			<div id="report-reason">
+			<div id="report-reason-wrap">아래 내용을 함께 보내주시면 더욱 빨리 처리가 가능합니다.<br>
+			 -팀이름입니다.: 피신고인 팀이름<br>
+			 -신고게시물NO: 신고게시물의 번호 <br>
+			 -신고사유: 정확한 사유를 기입해주시면, 더욱 빠른 처리가 가능합니다.<br>
+			 (*허위 신고 시 신고인과 신고팀에게 패널티가 적용됩니다.)
+			 </div>
+			</div>
+=======
 			<form action="report.do" method="post">
 				<span>팀이름: </span><input type="text" name="report-teamname">
 				<%if(session.getAttribute("memberInfo")==null){%>
@@ -141,6 +155,7 @@ String anim_class="";
 				<textarea id="report-reason" rows="6" cols="40" style="resize:none;">
 				</textarea>
 			</form>
+>>>>>>> branch 'master' of https://github.com/kuno2582/Versus
 		</div>
 		
 		<div class="footer_nav">

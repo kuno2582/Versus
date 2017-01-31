@@ -122,19 +122,22 @@ String anim_class="";
 			<p>패널티: </p><p id="team-pannelty">레드카드 2개</p><br>
 		</div>
 		<div class="footer_nav">
-			<%if(session.getAttribute("memberInfo")==null){
+		<%if(session.getAttribute("memberInfo")==null){
 				ft_nav2="#make-team";
 				ft_nav3="#make-team";
 				anim_class="popup-with-zoom-anim";
 			}else if(session.getAttribute("memberInfo")!=null){
-				ft_nav2="matchStatus.do?teamCode="+session.getAttribute("teamCode");
+				ft_nav2="matchstatus.jsp";
 				ft_nav3="info.jsp";
 				anim_class="";
-			}%>
-			<div class="ft_nav1"><a href="main.jsp"><img src="images/matching.png" width="40px" height="40px"></a></div>
-			<div class="ft_nav2"><a href="<%=ft_nav2%>" class="<%=anim_class%>"><img src="images/status.png" width="40px" height="40px"></a></div>
-			<div class="ft_nav3"><a href="<%=ft_nav3%>" class="<%=anim_class%>"><img src="images/teamInfo.png" width="40px" height="40px"></a></div>
-			<div class="ft_nav4"><a href="faq.do"><img src="images/qna.png" width="40px" height="40px"></a></div>
+			}
+		%>
+			<!-- <div class="ft_con"> -->
+				<div class="ft_nav1"><a href="main.jsp"><img src="images/matching.png" width="40px" height="40px"></a></div>
+				<div class="ft_nav2"><a href="<%=ft_nav2%>" class="<%=anim_class%>"><img src="images/status.png" width="40px" height="40px"></a></div>
+				<div class="ft_nav3"><a href="<%=ft_nav3%>" class="<%=anim_class%>"><img src="images/teamInfo.png" width="40px" height="40px"></a></div>
+				<div class="ft_nav4"><a href="faq.jsp"><img src="images/qna.png" width="40px" height="40px"></a></div>
+			<!-- </div> -->
 		</div>
 
 	</div>

@@ -1058,6 +1058,7 @@ opacity: .1;
 	float: left;
 	margin-left: 2.5%;
 	padding-top: 7px;
+
 }
 .bottom-teaminfo-center, .bottom-status-center {
 	display: inline-block;
@@ -1068,16 +1069,17 @@ opacity: .1;
 	width: 150px;
 }
 .tinfo-center-con {
+	height:40px;
 	width: 150px;
-	height: 40px;
 	display: table;
 }
 .con-cell {
-	display: table-cell;
-	font-size: 15pt;
-	vertical-align: middle;
+	height:40px;
+	font-family: 'Lora', serif;
+	font-size: 12pt;
 	color: white;
 }
+
 .bottom-teaminfo-right, .bottom-status-right {
 	display: inline-block;
 	height:40px;
@@ -1091,26 +1093,17 @@ opacity: .1;
 	display: inline-block;
 	padding-left: 10px;
 	border: 1px solid gray;
-	overflow: scroll;
 }
 #faq-div {
+	border-radius:10px;
 	width: 90%;
 	height: 200px;
 	display: inline-block;
 	padding-left: 10px;
 	border: 1px solid gray;
 }
-.faq-list span{
-	float:left;
-	text-align:left;
-}
-.faqModal h2{
-	background: #F7DD2C;
-}
-.faqModal {
-	background: #fff;
-}
 #report-div {
+	border-radius:10px;
 	width: 90%;
 	height: 200px;
 	display: inline-block;
@@ -1118,8 +1111,18 @@ opacity: .1;
 	border: 1px solid gray;
 }
 #report-reason {
+	margin-left:auto;
+	margin-right:auto;
+	display:table;
+	margin-top:8px;
+	color:gray;
+	border-radius:10px;
 	height: 70%;
 	border: 1px solid gray;
+}
+#report-reason-wrap{
+	display:table-cell;
+	vertical-align:middle;
 }
 .status-success-p, .status-ing-p, .status-fail-p, .faq-p {
 	margin-top: 10px;
@@ -1135,7 +1138,7 @@ opacity: .1;
 }
 .status-list span {
 	display: inline-block;
-	font-size: 10pt;
+	font-size: 14pt;
 	margin-left: 10px;
 	height: 25px;
 }
