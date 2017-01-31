@@ -9,6 +9,7 @@ import com.versus.dao.Dao;
 
 public class SignUpCheck implements Command {
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		
