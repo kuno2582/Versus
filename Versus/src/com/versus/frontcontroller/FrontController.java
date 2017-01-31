@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.versus.command.Command;
+import com.versus.command.FaqCommand;
 import com.versus.command.LoginCheck;
 import com.versus.command.MakeMatchCommand;
 import com.versus.command.MakeTeamCommand;
@@ -89,6 +90,10 @@ public class FrontController extends HttpServlet {
 			command.execute(request, response);
 			request.setAttribute("teamCode",request.getParameter("teamCode"));
 			viewPage = "matchstatus.jsp";
+		}else if(comm.equals("faq.do")){
+			command = new FaqCommand();
+			command.execute(request, response);
+			viewPage = "faq.jsp";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

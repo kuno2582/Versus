@@ -1100,6 +1100,16 @@ opacity: .1;
 	padding-left: 10px;
 	border: 1px solid gray;
 }
+.faq-list span{
+	float:left;
+	text-align:left;
+}
+.faqModal h2{
+	background: #F7DD2C;
+}
+.faqModal {
+	background: #fff;
+}
 #report-div {
 	width: 90%;
 	height: 200px;

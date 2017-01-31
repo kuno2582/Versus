@@ -112,14 +112,35 @@ String anim_class="";
 		</div>
 		<p class="faq-p">FAQ</p>
 		<div id="faq-div">
-			
+			<c:forEach items="${FAQList}" var="FaqDto" varStatus="VarStatus">
+			<a href="#faq_list${VarStatus.count}" class="popup-with-zoom-anim">
+				<div class="faq-list">
+					<span class="faq_count" style="border:1px solid gray;">${VarStatus.count}</span>
+					<span class="faq_title" style="border:1px solid gray;">${FaqDto.faq_title}</span>
+				</div>
+			</a>
+			<div id="faq_list${VarStatus.count}" class="faqModal mfp-hide w3ls_small_dialog">
+				<h2>FAQ ${VarStatus.count}</h2>
+				<p>제목: ${FaqDto.faq_title}</p>
+				<p>내용: ${FaqDto.faq_content}</p>
+			</div>
+			</c:forEach>
 		</div>
 		<p class="faq-p">신고하기</p>
 		<div id="report-div">
-			<span>팀이름: </span><input type="text" name="report-teamname"><input type="submit" value="신고">
-			<p>신고사유</p>
-			<div id="report-reason">
-			</div>
+			<form action="report.do" method="post">
+				<span>팀이름: </span><input type="text" name="report-teamname">
+				<%if(session.getAttribute("memberInfo")==null){%>
+					<a href="#make-team" class="popup-with-zoom-anim">
+						<input type="button" value="신고">
+					</a>
+				<%}else if(session.getAttribute("memberInfo")!=null){%>
+					<input type="submit" value="신고">
+				<%}%>
+				<p>신고사유</p>
+				<textarea id="report-reason" rows="6" cols="40" style="resize:none;">
+				</textarea>
+			</form>
 		</div>
 		
 		<div class="footer_nav">
@@ -136,7 +157,7 @@ String anim_class="";
 				<div class="ft_nav1"><a href="main.jsp"><img src="images/matching.png" width="40px" height="40px"></a></div>
 				<div class="ft_nav2"><a href="<%=ft_nav2%>" class="<%=anim_class%>"><img src="images/status.png" width="40px" height="40px"></a></div>
 				<div class="ft_nav3"><a href="<%=ft_nav3%>" class="<%=anim_class%>"><img src="images/teamInfo.png" width="40px" height="40px"></a></div>
-				<div class="ft_nav4"><a href="faq.jsp"><img src="images/qna.png" width="40px" height="40px"></a></div>
+				<div class="ft_nav4"><a href="faq.do"><img src="images/qna.png" width="40px" height="40px"></a></div>
 			<!-- </div> -->
 		</div>
 	</div>
