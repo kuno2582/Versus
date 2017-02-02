@@ -1092,8 +1092,7 @@ opacity: .1;
 	height: 125px;
 	display: inline-block;
 	padding-left: 10px;
-	border: 1px solid gray;
-	overflow: scroll;
+	overflow: auto;
 }
 #faq-div {
 	border-radius:10px;
@@ -1101,7 +1100,7 @@ opacity: .1;
 	height: 200px;
 	display: inline-block;
 	padding-left: 10px;
-	border: 1px solid gray;
+	overflow: auto;
 }
 .faq-list span{
 	float:left;
@@ -1119,7 +1118,6 @@ opacity: .1;
 	height: 200px;
 	display: inline-block;
 	padding: 5px;
-	border: 1px solid gray;
 }
 #report-reason {
 	margin-left:auto;
@@ -1136,6 +1134,7 @@ opacity: .1;
 	vertical-align:middle;
 }
 .status-success-p, .status-ing-p, .status-fail-p, .faq-p {
+	font-family: "Nanum Gothic", "¸¼Àº °íµñ", "Malgun Gothic", "µ¸¿ò", dotum,sans-serif;
 	margin-top: 10px;
 	margin-left: 10px;
 	text-align: left;

@@ -120,6 +120,10 @@ String anim_class="1";
 			<p>Level: </p><p id="team-level">7</p><br>
 			<p>승률: </p><p id="team-winRate">8/2/0 80%</p><br>
 			<p>패널티: </p><p id="team-pannelty">레드카드 2개</p><br>
+			<hr>
+			<p>소속팀원: </p><p id="team-member">임정환, 김윤호 (팀에 가입된 인원)</p><br>
+			<hr>
+			<p>신청대기인원: </p><p id="waiting">임정환, 김윤호</p><br>
 		</div>
 		<div class="footer_nav">
 			<%if(session.getAttribute("memberInfo")==null){

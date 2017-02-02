@@ -128,6 +128,7 @@ String anim_class="";
 			</div>
 			</c:forEach>
 		</div>
+		<hr>
 		<p class="faq-p">신고하기</p>
 		<div id="report-div">
 			<form action="report.do" method="post">
@@ -140,8 +141,8 @@ String anim_class="";
 					<input type="submit" value="신고">
 				<%}%>
 				<p>신고사유</p>
-				<textarea id="report-reason" rows="6" cols="40" 
-				placeholder="아래 내용을 함께 보내주시면 더욱 빨리 처리가 가능합니다.
+				<textarea id="report-reason" rows="6" cols="100" 
+				placeholder=" 아래 내용을 함께 보내주시면 더욱 빨리 처리가 가능합니다. 
 -팀이름: 피신고인 팀이름 
 -신고게시물NO: 신고게시물의 번호 
 -신고사유: 정확한 사유를 기입해주시면, 더욱 빠른 처리가 가능합니다.

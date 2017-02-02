@@ -44,6 +44,7 @@
 <link
 	href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic'
 	rel='stylesheet' type='text/css'>
+<link href='//http://fonts.googleapis.com/earlyaccess/nanumgothic.css' rel='stylesheet' type='text/css'>
 <!-- //web-fonts -->
 
 </head>
@@ -192,6 +193,7 @@ String anim_class="";
 				</c:if>
 			</c:forEach>
 		</div>
+		<hr>
 		<p class="status-ing-p">매칭 진행중</p>
 		<div id="status-ing">
 			<c:forEach items="${list}" var="MatchDto" varStatus="MatchStatus">
@@ -273,6 +275,7 @@ String anim_class="";
 				</c:if>
 			</c:forEach>
 		</div>
+		<hr>
 		<p class="status-fail-p">매칭 실패</p>
 		<div id="status-fail">
 			<c:forEach items="${list}" var="MatchDto" varStatus="MatchStatus">
