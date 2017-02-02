@@ -188,6 +188,7 @@ Boolean firstLoad = false;
 	<script src="js/jquery.magnific-popup.js" type="text/javascript"></script>
 	<div class="banner-bottom" id="moveup">
 		<c:forEach items="${list}" var="MatchDto" varStatus="MatchStatus">
+		<c:if test="${MatchDto.match_progress !='2' && MatchDto.match_progress !='3'}">
 			<div class="information">
 				<a href="#team_information${MatchStatus.count}" class="team_information play-icon popup-with-zoom-anim">
 					<div class="team_progress">
@@ -286,6 +287,7 @@ Boolean firstLoad = false;
 				</form>
 				</div>
 			</div>
+		</c:if>
 		</c:forEach>
 	</div>
 		<!-- 경기 정보 -->

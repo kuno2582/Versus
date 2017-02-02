@@ -170,6 +170,18 @@ String anim_class="";
 	<script type='text/javascript' src='js/jquery.easing.1.3.js'></script>
 	<script type='text/javascript' src='js/fluid_dg.min.js'></script>
 	<script type='text/javascript' src='js/versus.js'></script>
-	
+	<script type='text/javascript'>
+		$(function(){
+			$(window).resize(function(){
+				reportReasonResise();
+			});
+		});
+		
+		function reportReasonResise(){
+			var reportDivWidth = $('#report-div').width();
+			var taCols = reportDivWidth/8 ;
+			$('#report-reason').attr("cols",taCols);
+		}
+	</script>
 </body>
 </html>

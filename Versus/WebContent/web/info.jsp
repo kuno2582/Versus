@@ -108,7 +108,11 @@ String anim_class="1";
 		<div class="bottom-teaminfo">
 			<div class="bottom-teaminfo-left"><a href="#"><img src="images/back.png" width="25px" height="25px"></a></div>
 			<div class="bottom-teaminfo-center"><div class="tinfo-center-con"><div class="con-cell"><b>ÆÀ Á¤º¸</b></div></div></div>
-			<div class="bottom-teaminfo-right"><a href="#" id="fix-team"><img src="images/teamInfoFix.png" width="35px" height="35px"></a></div>
+			<div class="bottom-teaminfo-right">
+			<%if((Boolean)session.getAttribute("isLeader") || (Boolean)session.getAttribute("isSecondLeader")){%>
+				<a href="#" id="fix-team"><img src="images/teamInfoFix.png" width="35px" height="35px"></a>
+			<%}%>
+			</div>
 		</div>
 		<div class="bottom-teamContent">
 			<div class="bottom-teamName"></div>
