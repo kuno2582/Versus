@@ -15,6 +15,7 @@
 	String id;
 	String nickName;
 	int teamCode;
+	Boolean isLeader,isSecondLeader;
 	String teamName;
 	String sendPage = "main.jsp";
 	
@@ -32,6 +33,10 @@
 		session.setAttribute("nickName",nickName);
 		id = dto.getId();
 		session.setAttribute("id",id);
+		isLeader = dto.isLeader();
+		session.setAttribute("isLeader", isLeader);
+		isSecondLeader = dto.isSecond_leader();
+		session.setAttribute("isSecondLeader", isSecondLeader);
 		System.out.println("sessionPage.jsp : 로그인 후 세션에 정보 저장!");
 	}
 

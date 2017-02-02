@@ -188,6 +188,7 @@ Boolean firstLoad = false;
 	<script src="js/jquery.magnific-popup.js" type="text/javascript"></script>
 	<div class="banner-bottom" id="moveup">
 		<c:forEach items="${list}" var="MatchDto" varStatus="MatchStatus">
+		<c:if test="${MatchDto.match_progress !='2' && MatchDto.match_progress !='3'}">
 			<div class="information">
 				<a href="#team_information${MatchStatus.count}" class="team_information play-icon popup-with-zoom-anim">
 					<div class="team_progress">
@@ -286,6 +287,7 @@ Boolean firstLoad = false;
 				</form>
 				</div>
 			</div>
+		</c:if>
 		</c:forEach>
 	</div>
 		<!-- 경기 정보 -->
@@ -301,7 +303,7 @@ Boolean firstLoad = false;
 					ft_nav3="info.jsp";
 					anim_class="";
 				}%>
-				<div class="ft_nav1"><a href="main.jsp"><img src="images/matching.png" width="40px" height="40px"></a></div>
+				<div class="ft_nav1"><a href="searchMatch.do"><img src="images/matching.png" width="40px" height="40px"></a></div>
 				<div class="ft_nav2"><a href="<%=ft_nav2%>" class="<%=anim_class%>"><img src="images/status.png" width="40px" height="40px"></a></div>
 				<div class="ft_nav3"><a href="<%=ft_nav3%>" class="<%=anim_class%>"><img src="images/teamInfo.png" width="40px" height="40px"></a></div>
 				<div class="ft_nav4"><a href="faq.do"><img src="images/qna.png" width="40px" height="40px"></a></div>
