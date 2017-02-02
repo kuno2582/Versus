@@ -16,6 +16,7 @@ import com.versus.command.MakeMatchCommand;
 import com.versus.command.MakeTeamCommand;
 import com.versus.command.SearchCommand;
 import com.versus.command.SignUpCommand;
+import com.versus.command.TeamInfoCommand;
 
 @WebServlet("*.do")
 public class FrontController extends HttpServlet {
@@ -46,6 +47,7 @@ public class FrontController extends HttpServlet {
 		
 		String viewPage = null;
 		Command command = null;
+		Command command2 = null;
 		
 		String uri = request.getRequestURI();
 		System.out.println("URI: " + uri);
@@ -65,6 +67,8 @@ public class FrontController extends HttpServlet {
 		if(comm.equals("loginCheck.do")){
 			command = new LoginCheck();
 			command.execute(request,response);
+			command2 = new SearchCommand();
+			command2.execute(request, response);
 			viewPage = "sessionPage.jsp";
 		}else if(comm.equals("logout.do")){
 			request.setAttribute("logout", "logout");
@@ -94,6 +98,10 @@ public class FrontController extends HttpServlet {
 			command = new FaqCommand();
 			command.execute(request, response);
 			viewPage = "faq.jsp";
+		}else if(comm.equals("info.do")){
+			command = new TeamInfoCommand();
+			command.execute(request, response);
+			viewPage = "info.jsp";
 		}
 		
 		

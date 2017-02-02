@@ -4,6 +4,7 @@ public class TeamDto {
 	int team_code;
 	String team_name;
 	String leader_name;
+	String second_leader_name;
 	String leader_phone;
 	String region;
 	String uniform;
@@ -17,11 +18,12 @@ public class TeamDto {
 		
 	}
 	
-	public TeamDto(int team_code, String team_name,String leader_name,String leader_phone,String region,String uniform,
+	public TeamDto(int team_code, String team_name,String leader_name,String second_leader_name,String leader_phone,String region,String uniform,
 			int level,int win,int lose,int draw,int penalty){
 		this.team_code = team_code;
 		this.team_name = team_name;
 		this.leader_name = leader_name;
+		this.second_leader_name = second_leader_name;
 		this.leader_phone = leader_phone;
 		this.region = region;
 		this.uniform = uniform;
@@ -54,6 +56,14 @@ public class TeamDto {
 
 	public void setLeader_name(String leader_name) {
 		this.leader_name = leader_name;
+	}
+
+	public String getSecond_leader_name() {
+		return second_leader_name;
+	}
+
+	public void setSecond_leader_name(String second_leader_name) {
+		this.second_leader_name = second_leader_name;
 	}
 
 	public String getLeader_phone() {

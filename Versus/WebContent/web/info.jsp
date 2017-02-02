@@ -116,14 +116,15 @@ String anim_class="1";
 		</div>
 		<div class="bottom-teamContent">
 			<div class="bottom-teamName"></div>
-			<br><p>주장: </p><input type="text" id="leader" value="임정환" disabled size="5"><br>
-			<p>팀 대표 전화: </p><input id="team-phone" disabled size="12" value="010-8911-9621"><br>
-			<p>활동지역: </p><input id="team-region" disabled size="15" value="성남시, 서울남부"><br>
-			<p>유니폼: </p><input id="team-uniform" disabled size="3" value="검/빨"><br>
+			<br><p>주장: </p><input type="text" id="leader" value="${teamInfo.leader_name}" disabled size="5"><br>
+			<p>부주장: </p><input type="text" id="second_leader" value="${teamInfo.second_leader_name}" disabled size="5"><br>
+			<p>팀 대표 전화: </p><input id="team-phone" disabled size="12" value="${teamInfo.leader_phone}"><br>
+			<p>활동지역: </p><input id="team-region" disabled size="15" value="${teamInfo.region }"><br>
+			<p>유니폼: </p><input id="team-uniform" disabled size="3" value="${teamInfo.uniform }"><br>
 			<hr>
-			<p>Level: </p><p id="team-level">7</p><br>
-			<p>승률: </p><p id="team-winRate">8/2/0 80%</p><br>
-			<p>패널티: </p><p id="team-pannelty">레드카드 2개</p><br>
+			<p>Level: </p><p id="team-level">${teamInfo.level}</p><br>
+			<p>승률: </p><p id="team-winRate">${teamInfo.win}/${teamInfo.lose}/${teamInfo.draw} ${(teamInfo.win)/(teamInfo.lose+teamInfo.win)*100}%</p><br>
+			<p>패널티: </p><p id="team-pannelty">경고횟수 ${teamInfo.penalty}회</p><br>
 		</div>
 		<div class="footer_nav">
 			<%if(session.getAttribute("memberInfo")==null){
@@ -132,10 +133,10 @@ String anim_class="1";
 				anim_class="popup-with-zoom-anim";
 			}else if(session.getAttribute("memberInfo")!=null){
 				ft_nav2="matchStatus.do?teamCode="+session.getAttribute("teamCode");
-				ft_nav3="info.jsp";
+				ft_nav3="info.do?teamCode="+session.getAttribute("teamCode");
 				anim_class="";
 			}%>
-			<div class="ft_nav1"><a href="main.jsp"><img src="images/matching.png" width="40px" height="40px"></a></div>
+			<div class="ft_nav1"><a href="searchMatch.do"><img src="images/matching.png" width="40px" height="40px"></a></div>
 			<div class="ft_nav2"><a href="<%=ft_nav2%>" class="<%=anim_class%>"><img src="images/status.png" width="40px" height="40px"></a></div>
 			<div class="ft_nav3"><a href="<%=ft_nav3%>" class="<%=anim_class%>"><img src="images/teamInfo.png" width="40px" height="40px"></a></div>
 			<div class="ft_nav4"><a href="faq.do"><img src="images/qna.png" width="40px" height="40px"></a></div>
