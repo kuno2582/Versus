@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.versus.command.AcceptMatch;
 import com.versus.command.Command;
 import com.versus.command.FaqCommand;
 import com.versus.command.LoginCheck;
@@ -102,6 +103,12 @@ public class FrontController extends HttpServlet {
 			command = new TeamInfoCommand();
 			command.execute(request, response);
 			viewPage = "info.jsp";
+		}else if(comm.equals("acceptMatch.do")){
+			command = new AcceptMatch();
+			command.execute(request, response);
+			command = new SearchCommand();
+			command.execute(request, response);
+			viewPage = "matchstatus.jsp";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

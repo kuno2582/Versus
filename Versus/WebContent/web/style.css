@@ -922,6 +922,24 @@ opacity: .1;
 	background:#F7DD2C;
 	color:#212121;
 }
+.resultBtn {
+	text-align:center;
+	display: block;
+	outline: none;
+    padding: 7px 0;
+    font-size: 1em;
+    color: #fff;
+    border: none;
+	width: 33%;
+	background:#24AB00;
+    margin:0.5em 0 0;
+	text-transform:uppercase;
+}
+.resultBtn:hover{
+	background:#F7DD2C;
+	color:#212121;
+}
+
 .modal-body h4 {
     font-size: 1.2em;
     color: #212121;

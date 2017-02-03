@@ -712,4 +712,81 @@ public class Dao {
 		}
 		return dtos;
 	}//teamInfo()
+	
+	public void matchResult(int match_num, String match_result, int teamCode){
+		
+		String URL = "jdbc:mysql://localhost:3306/versus?useUnicode=true&characterEncoding=euc-kr";		
+		String USER = "root";							
+		String PASS="apmsetup";		
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try{
+			Class.forName("com.mysql.jdbc.Driver");	
+			connection = DriverManager.getConnection(URL, USER, PASS);
+			String query = "SET NAMES euckr";
+			Statement stat = connection.createStatement();
+			stat.executeQuery(query);
+			if(match_result.equals("win")){
+				query = "UPDATE match_info SET REPORTED_WINNER=? WHERE MATCH_NUM=?";
+			}else if(match_result.equals("draw")){
+				query = "UPDATE match_info SET REPORTED_DRAW=? WHERE MATCH_NUM=?";
+			}else if(match_result.equals("lose")){
+				query = "UPDATE match_info SET REPORTED_LOSER=? WHERE MATCH_NUM=?";
+			}
+			
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, teamCode);	//Äõ¸®¹® ? ³»¿ë
+			preparedStatement.setInt(2, match_num);
+			preparedStatement.executeUpdate();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try{
+				if(preparedStatement!=null)preparedStatement.close();
+				if(connection!=null)connection.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+	}//matchResult
+	
+	public void acceptMatch(int match_num,int teamCode){
+		
+		String URL = "jdbc:mysql://localhost:3306/versus?useUnicode=true&characterEncoding=euc-kr";		
+		String USER = "root";							
+		String PASS="apmsetup";		
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try{
+			Class.forName("com.mysql.jdbc.Driver");	
+			connection = DriverManager.getConnection(URL, USER, PASS);
+			String query = "SET NAMES euckr";
+			Statement stat = connection.createStatement();
+			stat.executeQuery(query);
+			
+			query = "UPDATE match_info SET OPPONENT_CODE=?,MATCH_PROGRESS=? WHERE MATCH_NUM=?";
+			
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, teamCode);	//Äõ¸®¹® ? ³»¿ë
+			preparedStatement.setInt(2, 2);
+			preparedStatement.setInt(3, match_num);
+			preparedStatement.executeUpdate();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try{
+				if(preparedStatement!=null)preparedStatement.close();
+				if(connection!=null)connection.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		
+	}
 }

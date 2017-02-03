@@ -177,11 +177,12 @@ String anim_class="";
 							<div class="teamdata_con">
 								<div id="teamdata_map"></div>
 							</div>
-							<%if((session.getAttribute("memberInfo")==null)||((Integer)session.getAttribute("teamCode")==0)){
-								%><a href="#make_match" class="apply_error popup-with-zoom-anim">신청하기</a><%
-							}else{
-								%><input type="button" value="신청하기" class="apply_error btn_apply_match${MatchStatus.count}" onclick="apply_button(${MatchStatus.count})"><%
-							} %> 
+							<input type="button" value="승리" class="resultBtn btn_apply_match${MatchStatus.count}" 
+								onclick="matchResult(${MatchDto.match_num},'win',<%=session.getAttribute("teamCode")%>)">
+							<input type="button" value="무승부" class="resultBtn btn_apply_match${MatchStatus.count}" 
+								onclick="matchResult(${MatchDto.match_num},'draw',<%=session.getAttribute("teamCode")%>)">
+							<input type="button" value="패배" class="resultBtn btn_apply_match${MatchStatus.count}" 
+								onclick="matchResult(${MatchDto.match_num},'lose',<%=session.getAttribute("teamCode")%>)">
 							<table id="commentTable${MatchStatus.count}" class="table table-condensed commentTable">
 								<c:forEach items="${matchComment}" var="Comment">
 									<c:if test="${Comment.match_num eq MatchDto.match_num}">
@@ -271,6 +272,9 @@ String anim_class="";
 											<td>${Comment.team_name}</td>
 											<td>${Comment.nickName}</td>
 											<td>${Comment.comment}</td>
+											<c:if test="${Comment.application}">
+												<td><input type="button" value="수락" onclick="acceptMatch(${MatchDto.match_num},${Comment.team_code})"></td>
+											</c:if>
 										</tr>
 									</c:if>
 								</c:forEach>
@@ -385,5 +389,30 @@ String anim_class="";
 	<script type='text/javascript' src='js/jquery.easing.1.3.js'></script>
 	<script type='text/javascript' src='js/fluid_dg.min.js'></script>
 	<script type='text/javascript' src='js/versus.js'></script>
+	<script type='text/javascript'>
+		
+	function matchResult(match_num,result,teamCode){
+		
+		if(teamCode == null){
+			alert("다시 로그인해주세요.");
+			return;
+		}
+		
+		$.ajax({
+			type:'GET',
+			url:"matchResult.ajax",
+			data:{"match_num":match_num,"match_result":result,"teamCode":teamCode},
+			datatype:"JSON",
+			contentType: "application/x-www-form-urlencoded; charset=EUC-KR",
+			success:function(obj){
+				$(".mfp-close").trigger("click");
+			}
+		});
+	}
+	
+	function acceptMatch(match_num,teamCode){
+		location.href="acceptMatch.do?match_num=" + match_num + "&teamCode=" + teamCode;
+	}
+	</script>
 </body>
 </html>
