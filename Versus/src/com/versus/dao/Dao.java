@@ -655,5 +655,61 @@ public class Dao {
 		}
 		
 		return dto;
-	}
+	}//teamInfo(teamCode)
+	
+	public ArrayList<TeamDto> teamInfo(){
+		
+		String URL = "jdbc:mysql://localhost:3306/versus?useUnicode=true&characterEncoding=euc-kr";		
+		String USER = "root";							
+		String PASS="apmsetup";		
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		ArrayList<TeamDto> dtos = new ArrayList<TeamDto>();
+		
+		try{
+			
+			Class.forName("com.mysql.jdbc.Driver");	
+			connection = DriverManager.getConnection(URL, USER, PASS);
+			String query = "SET NAMES euckr";
+			Statement stat = connection.createStatement();
+			stat.executeQuery(query);
+			
+			query = "SELECT * FROM team_info";
+			preparedStatement = connection.prepareStatement(query);
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()){
+				int team_Code = resultSet.getInt("TEAM_CODE");
+				String team_name = resultSet.getString("TEAM_NAME");
+				String leader_id = resultSet.getString("LEADER_ID");
+				String second_leader_id = resultSet.getString("SECOND_LEADER_ID");
+				String phone = resultSet.getString("PHONE");
+				String region = resultSet.getString("REGION");
+				String uniform = resultSet.getString("UNIFORM");
+				int level = resultSet.getInt("LEVEL");
+				int win = resultSet.getInt("WIN");
+				int lose = resultSet.getInt("LOSE");
+				int draw = resultSet.getInt("DRAW");
+				int penalty = resultSet.getInt("PENALTY");
+				TeamDto dto = new TeamDto(team_Code,team_name,leader_id,second_leader_id,phone,region,uniform,
+						level,win,lose,draw,penalty);
+				dtos.add(dto);
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try{
+				if(resultSet!=null)resultSet.close();
+				if(preparedStatement!=null)preparedStatement.close();
+				if(connection!=null)connection.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		return dtos;
+	}//teamInfo()
 }

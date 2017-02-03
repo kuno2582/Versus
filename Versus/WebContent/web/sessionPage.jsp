@@ -48,7 +48,9 @@
 		}
 	}
 
-	response.sendRedirect(sendPage);
+	RequestDispatcher dispatcher = request.getRequestDispatcher(sendPage);
+	dispatcher.forward(request, response);
+	/* response.sendRedirect(sendPage); */
 %>
 </body>
 </html>

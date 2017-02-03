@@ -115,7 +115,7 @@ String anim_class="";
 		<p class="status-success-p">매칭 완료</p>
 		<div id="status-success">
 			<c:forEach items="${list}" var="MatchDto" varStatus="MatchStatus">
-				<c:if test="${teamCode == MatchDto.team_code && MatchDto.match_progress =='0'}">
+				<c:if test="${teamCode == MatchDto.team_code && MatchDto.match_progress =='2'}">
 					<a href="#team_red${MatchStatus.count}" class="team_information play-icon popup-with-zoom-anim">
 						<div class="status-list">
 							<div class="progress_circle progress_red"></div>
@@ -130,24 +130,30 @@ String anim_class="";
 					</a>
 					
 					<div id="team_red${MatchStatus.count}" class="team_information mfp-hide w3ls_small_dialog">
-						<h2>경기 정보</h2>
+						<h2>매칭 완료</h2>
 						<div class="modal-body agileits_modal_body">
 						<form action="#" id="team_information_apply${MatchStatus.count}">
 							<input type="hidden" value="${MatchDto.match_num}" id="teamdata_code${MatchStatus.count}">
 							<input type="hidden" value="<%=session.getAttribute("teamCode")%>" class="session_teamCode">
 							<input type="hidden" value="<%=session.getAttribute("nickName")%>" class="session_nickName">
 							<input type="hidden" value="<%=session.getAttribute("teamName")%>" class="session_teamName">
-							<span class="teamdata" id="teamdata_name">팀이름 : </span><span class="teamdata" id="teamdata_name${MatchStatus.count}">${MatchDto.team_name}</span><br>
-							<span class="teamdata" id="teamdata_place">장소 : </span><span class="teamdata" id="teamdata_place${MatchStatus.count}">${MatchDto.match_region}</span><br>
-							<span class="teamdata" id="teamdata_date">일시 : </span><span class="teamdata" id="teamdata_date${MatchStatus.count}">
+							<span class="teamdata" id="teamdata_name">팀이름 : </span>
+							<c:forEach items="${teamInfo}" var="teamDto">
+								<c:if test="${MatchDto.opponent_code eq teamDto.team_code}">
+								<span class="teamdata" id="teamdata_name${MatchStatus.count}">${MatchDto.team_name} vs ${teamDto.team_name}</span><br>
+								<span class="teamdata" id="teamdata_place">장소 : </span><span class="teamdata" id="teamdata_place${MatchStatus.count}">${MatchDto.match_region}</span><br>
+								<span class="teamdata" id="teamdata_date">일시 : </span><span class="teamdata" id="teamdata_date${MatchStatus.count}">
 								<c:forTokens var="HM" items="${MatchDto.match_date}" delims=":" begin="0" end="1" varStatus="status">
 									${HM}<c:if test="${status.count == 1}"> :</c:if>
 								</c:forTokens>
-							</span><br>
-							<span class="teamdata" id="teamdata_level">팀정보 : </span><span class="teamdata" id="teamdata_level${MatchStatus.count}">Lv ${MatchDto.level}, ${MatchDto.win}승 ${MatchDto.lose}패 ${MatchDto.draw}무, 
-								경고횟수: ${MatchDto.penalty}</span><br>
-							<span class="teamdata" id="teamdata_phone">연락처 : </span><span class="teamdata" id="teamdata_phone${MatchStatus.count}">${MatchDto.match_phone}</span><br>
-							<span class="teamdata" id="teamdata_uniform">유니폼색상 : </span><span class="teamdata" id="teamdata_uniform${MatchStatus.count}">${MatchDto.uniform}</span><br>
+								</span><br><hr>
+								<span class="teamdata" id="teamdata_level">상대팀정보 : </span>
+								<span class="teamdata" id="teamdata_level${MatchStatus.count}">Lv ${teamDto.level}, ${teamDto.win}승 ${teamDto.lose}패 ${teamDto.draw}무, 
+								경고횟수: ${teamDto.penalty}</span><br>
+								<span class="teamdata" id="teamdata_phone">연락처 : </span><span class="teamdata" id="teamdata_phone${MatchStatus.count}">${teamDto.leader_phone}</span><br>
+								<span class="teamdata" id="teamdata_uniform">유니폼색상 : </span><span class="teamdata" id="teamdata_uniform${MatchStatus.count}">${teamDto.uniform}</span><br>
+							</c:if>
+							</c:forEach>
 							<div class="teamdata_con">
 								<c:choose>
 									<c:when test="${MatchDto.shower == '1'}"><input type="checkbox" disabled value="shower">샤워실</c:when>
@@ -197,7 +203,7 @@ String anim_class="";
 		<p class="status-ing-p">매칭 진행중</p>
 		<div id="status-ing">
 			<c:forEach items="${list}" var="MatchDto" varStatus="MatchStatus">
-				<c:if test="${teamCode == MatchDto.team_code && (MatchDto.match_progress =='1' || MatchDto.match_progress=='2')}">
+				<c:if test="${teamCode == MatchDto.team_code && (MatchDto.match_progress =='1' || MatchDto.match_progress=='0')}">
 					<a href="#team_green${MatchStatus.count}" class="team_information play-icon popup-with-zoom-anim">
 						<div class="status-list">
 							<div class="progress_circle progress_green"></div>

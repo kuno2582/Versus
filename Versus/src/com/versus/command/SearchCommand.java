@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.versus.dao.Dao;
 import com.versus.dto.CommentDto;
 import com.versus.dto.MatchDto;
+import com.versus.dto.TeamDto;
 
 public class SearchCommand implements Command {
 
@@ -65,9 +66,11 @@ public class SearchCommand implements Command {
 		
 		ArrayList<MatchDto> dtos = dao.searchMatch(region1, region2, match_date1, match_date2);
 		ArrayList<CommentDto> comment_dtos = dao.matchComment();
+		ArrayList<TeamDto> teamInfoDtos = dao.teamInfo();
 		
 		request.setAttribute("list", dtos);
 		request.setAttribute("matchComment", comment_dtos);
+		request.setAttribute("teamInfo", teamInfoDtos);
 	}
 
 }

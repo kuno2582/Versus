@@ -1,5 +1,7 @@
 package com.versus.command;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,11 +12,16 @@ public class TeamInfoCommand implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
-
-		int teamCode = Integer.parseInt(request.getParameter("teamCode"));
+		 
 		Dao dao = new Dao();
-		TeamDto dto = dao.teamInfo(teamCode);
-		request.setAttribute("teamInfo", dto);
+		if(request.getParameter("teamCode")!=null){
+			int teamCode = Integer.parseInt(request.getParameter("teamCode"));
+			TeamDto dto = dao.teamInfo(teamCode);
+			request.setAttribute("teamInfo", dto);
+		}else if(request.getParameter("teamCode")==null){
+			ArrayList<TeamDto> dtos = dao.teamInfo();
+			request.setAttribute("teamInfo", dtos);
+		}
 		
 	}
 
