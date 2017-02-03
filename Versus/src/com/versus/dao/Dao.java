@@ -12,6 +12,7 @@ import com.versus.dto.CommentDto;
 import com.versus.dto.FaqDto;
 import com.versus.dto.InputMemberInfoDto;
 import com.versus.dto.MatchDto;
+import com.versus.dto.MemberDto;
 import com.versus.dto.TeamDto;
 
 public class Dao {
@@ -524,23 +525,6 @@ public class Dao {
 			preparedStatement.setString(5, "경기 신청합니다.");
 			preparedStatement.executeUpdate();
 			
-			/*query = "SELECT * FROM comment JOIN team_info on comment.team_code=team_info.team_code where "+
-					"comment.MATCH_NUM = ?";
-			preparedStatement = connection.prepareStatement(query);
-			
-			
-			while(resultSet.next()){
-				
-				int match_num = resultSet.getInt("match_num");
-				int team_code = resultSet.getInt("team_code");
-				String team_name = resultSet.getString("team_name");
-				String nickName = resultSet.getString("NICKNAME");
-				Boolean application = resultSet.getBoolean("APPLICATION");
-				String comment = resultSet.getString("COMMENT");
-				CommentDto dto = new CommentDto(match_num,team_code,team_name,nickName,application,comment);
-				dtos.add(dto);
-			}*/
-			
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
@@ -656,6 +640,61 @@ public class Dao {
 		
 		return dto;
 	}//teamInfo(teamCode)
+	
+	public ArrayList<MemberDto> teamInfoMember(int teamCode){
+		
+		String URL = "jdbc:mysql://localhost:3306/versus?useUnicode=true&characterEncoding=euc-kr";		
+		String USER = "root";							
+		String PASS="apmsetup";		
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		ArrayList<MemberDto> member_dtos = new ArrayList<MemberDto>();
+		
+		try{
+			
+			Class.forName("com.mysql.jdbc.Driver");	
+			connection = DriverManager.getConnection(URL, USER, PASS);
+			String query = "SET NAMES euckr";
+			Statement stat = connection.createStatement();
+			stat.executeQuery(query);
+			
+			query = "SELECT * FROM member_info WHERE TEAM_CODE=?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, teamCode);	//쿼리문 ? 내용
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()){
+				String id = resultSet.getString("ID");
+				String nickName = resultSet.getString("NICKNAME");
+				if(resultSet.getString("NICKNAME")==null){
+					nickName = id;
+				}
+				String region = resultSet.getString("REGION");
+				String mail = resultSet.getString("MAIL");
+				int team_code = resultSet.getInt("TEAM_CODE");
+				Boolean leader = resultSet.getBoolean("LEADER");
+				Boolean second_leader = resultSet.getBoolean("SECOND_LEADER");
+				Timestamp signup_date = resultSet.getTimestamp("SIGNUP_DATE");
+				MemberDto dto = new MemberDto(id,nickName,region,signup_date,team_code,mail,leader,second_leader);
+				member_dtos.add(dto);
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try{
+				if(resultSet!=null)resultSet.close();
+				if(preparedStatement!=null)preparedStatement.close();
+				if(connection!=null)connection.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		return member_dtos;
+	}
 	
 	public ArrayList<TeamDto> teamInfo(){
 		
@@ -775,6 +814,42 @@ public class Dao {
 			preparedStatement.setInt(1, teamCode);	//쿼리문 ? 내용
 			preparedStatement.setInt(2, 2);
 			preparedStatement.setInt(3, match_num);
+			preparedStatement.executeUpdate();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try{
+				if(preparedStatement!=null)preparedStatement.close();
+				if(connection!=null)connection.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		
+	}//acceptMatch
+	
+	public void sendReport(String report_id,String reportee_teamName,String content){
+		
+		String URL = "jdbc:mysql://localhost:3306/versus?useUnicode=true&characterEncoding=euc-kr";		
+		String USER = "root";							
+		String PASS="apmsetup";		
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try{
+			Class.forName("com.mysql.jdbc.Driver");	
+			connection = DriverManager.getConnection(URL, USER, PASS);
+			String query = "SET NAMES euckr";
+			Statement stat = connection.createStatement();
+			stat.executeQuery(query);
+			
+			query = "INSERT INTO report(REPORT_ID, REPORTEE_TEAM_NAME, CONTENT) VALUES (?, ?, ?)";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, report_id);	//쿼리문 ? 내용
+			preparedStatement.setString(2, reportee_teamName);
+			preparedStatement.setString(3, content);
 			preparedStatement.executeUpdate();
 			
 		}catch(Exception e){

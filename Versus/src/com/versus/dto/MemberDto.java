@@ -17,6 +17,21 @@ public class MemberDto {
 		
 	}
 	
+	public MemberDto(String id, String nickName, String region, Timestamp signupDate, int teamCode, String mail,
+			boolean leader, boolean second_leader) {
+		super();
+		this.id = id;
+		this.nickName = nickName;
+		this.region = region;
+		this.signupDate = signupDate;
+		this.teamCode = teamCode;
+		this.mail = mail;
+		this.leader = leader;
+		this.second_leader = second_leader;
+	}
+
+
+
 	public MemberDto(String id, String pw, String nickName, String region,
 			Timestamp signupDate, int teamCode, String mail, boolean leader, boolean second_leader){
 		this.id = id;

@@ -22,7 +22,7 @@
 <!-- Custom Theme files -->
 <link href="css/bootstrap.css" type="text/css" rel="stylesheet"
 	media="all">
-<link href="css/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="style.css" type="text/css" rel="stylesheet" media="all">
 <link rel='stylesheet' id='fluid_dg-css' href='css/fluid_dg.css'
 	type='text/css' media='all'>
 <link href="css/popuo-box.css" rel="stylesheet" type="text/css"
@@ -132,7 +132,8 @@ String anim_class="";
 		<p class="faq-p">신고하기</p>
 		<div id="report-div">
 			<form action="report.do" method="post">
-				<span>팀이름: </span><input type="text" name="report-teamname">
+				<input type="hidden" name="report_id" value="<%=session.getAttribute("id")%>">
+				<span>팀이름: </span><input type="text" name="reportee_teamName">
 				<%if(session.getAttribute("memberInfo")==null){%>
 					<a href="#make-team" class="popup-with-zoom-anim">
 						<input type="button" value="신고">
@@ -141,7 +142,7 @@ String anim_class="";
 					<input type="submit" value="신고">
 				<%}%>
 				<p>신고사유</p>
-				<textarea id="report-reason" rows="6" cols="100" 
+				<textarea name="content" id="report-reason" rows="6" cols="40" 
 				placeholder=" 아래 내용을 함께 보내주시면 더욱 빨리 처리가 가능합니다. 
 -팀이름: 피신고인 팀이름 
 -신고게시물NO: 신고게시물의 번호 
@@ -151,21 +152,19 @@ String anim_class="";
 		</div>
 		
 		<div class="footer_nav">
-		<%if(session.getAttribute("memberInfo")==null){
-			ft_nav2="#make-team";
-			ft_nav3="#make-team";
-			anim_class="popup-with-zoom-anim";
-		}else if(session.getAttribute("memberInfo")!=null){
-			ft_nav2="matchStatus.do?teamCode="+session.getAttribute("teamCode");
-			ft_nav3="info.jsp";
-			anim_class="";
-		}%>
-			<!-- <div class="ft_con"> -->
-				<div class="ft_nav1"><a href="searchMatch.do"><img src="images/matching.png" width="40px" height="40px"></a></div>
-				<div class="ft_nav2"><a href="<%=ft_nav2%>" class="<%=anim_class%>"><img src="images/status.png" width="40px" height="40px"></a></div>
-				<div class="ft_nav3"><a href="<%=ft_nav3%>" class="<%=anim_class%>"><img src="images/teamInfo.png" width="40px" height="40px"></a></div>
-				<div class="ft_nav4"><a href="faq.do"><img src="images/qna.png" width="40px" height="40px"></a></div>
-			<!-- </div> -->
+			<%if(session.getAttribute("memberInfo")==null){
+				ft_nav2="#make-team";
+				ft_nav3="#make-team";
+				anim_class="popup-with-zoom-anim";
+			}else if(session.getAttribute("memberInfo")!=null){
+				ft_nav2="matchStatus.do?teamCode="+session.getAttribute("teamCode");
+				ft_nav3="info.do?teamCode="+session.getAttribute("teamCode");
+				anim_class="";
+			}%>
+			<div class="ft_nav1"><a href="searchMatch.do"><img src="images/matching.png" width="40px" height="40px"></a></div>
+			<div class="ft_nav2"><a href="<%=ft_nav2%>" class="<%=anim_class%>"><img src="images/status.png" width="40px" height="40px"></a></div>
+			<div class="ft_nav3"><a href="<%=ft_nav3%>" class="<%=anim_class%>"><img src="images/teamInfo.png" width="40px" height="40px"></a></div>
+			<div class="ft_nav4"><a href="faq.do"><img src="images/qna.png" width="40px" height="40px"></a></div>
 		</div>
 	</div>
 	<script type='text/javascript' src='js/jquery.easing.1.3.js'></script>

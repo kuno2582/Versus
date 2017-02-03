@@ -122,7 +122,11 @@ String anim_class="1";
 			<p>활동지역: </p><input id="team-region" disabled size="15" value="${teamInfo.region }"><br>
 			<p>유니폼: </p><input id="team-uniform" disabled size="3" value="${teamInfo.uniform }"><br>
 			<hr>
-			<p>소속팀원: </p><p id="team-member">임정환, 김윤호 (팀에 가입된 인원)</p><br>
+			<p>소속팀원: </p><p id="team-member">
+				<c:forEach items="${teamInfoMember}" var="memberDto" varStatus="Status">
+				${memberDto.nickName}&nbsp;
+				</c:forEach>
+			</p><br>
 			<hr>
 			<p>신청대기인원: </p><p id="waiting">임정환, 김윤호</p><br>
 			<p>Level: </p><p id="team-level">${teamInfo.level}</p><br>

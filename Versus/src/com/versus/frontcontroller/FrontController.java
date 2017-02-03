@@ -16,6 +16,7 @@ import com.versus.command.LoginCheck;
 import com.versus.command.MakeMatchCommand;
 import com.versus.command.MakeTeamCommand;
 import com.versus.command.SearchCommand;
+import com.versus.command.SendReportCommand;
 import com.versus.command.SignUpCommand;
 import com.versus.command.TeamInfoCommand;
 
@@ -109,6 +110,10 @@ public class FrontController extends HttpServlet {
 			command = new SearchCommand();
 			command.execute(request, response);
 			viewPage = "matchstatus.jsp";
+		}else if(comm.equals("report.do")){
+			command = new SendReportCommand();
+			command.execute(request, response);
+			viewPage = "main.jsp";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
