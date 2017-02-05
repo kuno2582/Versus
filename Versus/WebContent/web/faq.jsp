@@ -184,7 +184,7 @@ String anim_class="";
 		
 		function reportReasonResise(){
 			var reportDivWidth = $('#report-div').width();
-			var taCols = reportDivWidth/8 ;
+			var taCols = reportDivWidth/9 ;
 			$('#report-reason').attr("cols",taCols);
 		}
 	</script>

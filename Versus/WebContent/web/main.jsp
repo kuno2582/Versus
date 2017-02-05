@@ -363,9 +363,12 @@ Boolean firstLoad = false;
 			datatype:"JSON",
 			contentType: "application/x-www-form-urlencoded; charset=EUC-KR",
 			success:function(obj){
-				$('#idCheckVal').val('OK');
-				if($('#idCheckVal').val()=='OK' && $('#pwCheckVal').val()=='OK'){
-					$('.signUpBtn').css('background','#24AB00');
+				var data = obj;
+				if(data.checkResult == 'possible'){
+					$('#idCheckVal').val('OK');
+					if($('#idCheckVal').val()=='OK' && $('#pwCheckVal').val()=='OK'){
+						$('.signUpBtn').css('background','#24AB00');
+					}	
 				}
 			}
 		});

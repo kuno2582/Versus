@@ -84,8 +84,32 @@
 			</div>
 			<div class="clearfix"></div>
 			<div class="w3_modal_body_grid w3_modal_body_grid1">
-				<span>지역</span> <input type="text" name="Region" required />
+				<span>지역</span> 
+				
+				<select id="choice_region1" class="signUpRegion frm-field required choice_region1 make_input" name="region1">
+					<option value="">선택</option>
+					<option value="서울">서울</option>
+					<option value="경기">경기</option>
+					<option value="인천">인천</option>
+					<option value="강원">강원</option>
+					<option value="광주">광주</option>
+					<option value="충북">충북</option>
+					<option value="충남">충남</option>
+					<option value="대구">대구</option>
+					<option value="대전">대전</option>
+					<option value="경북">경북</option>
+					<option value="경남">경남</option>
+					<option value="울산">울산</option>
+					<option value="전북">전북</option>
+					<option value="전남">전남</option>
+					<option value="제주">제주</option>
+				</select>
+				<select id="choice_region2" class="signUpRegion frm-field required choice_region2 make_input" name="region2">
+					<option value="">선택</option>
+				</select><br>
+				
 			</div>
+			<div class="clearfix"></div>
 			<div class="w3_modal_body_grid w3_modal_body_grid1">
 				<span>Email</span> <input type="email" name="Email" required />
 			</div>

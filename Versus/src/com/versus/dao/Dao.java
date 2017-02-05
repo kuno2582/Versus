@@ -136,7 +136,7 @@ public class Dao {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		
-		String result = "아이디를 사용할 수 있습니다.";
+		String result = "possible";
 		
 		try{
 			
@@ -151,13 +151,13 @@ public class Dao {
 			preparedStatement.setString(1, checkId);	//쿼리문 ? 내용
 			resultSet = preparedStatement.executeQuery();
 			
-			if(resultSet.next()){
-				result = "이미 아이디가 존재합니다.";
+			while(resultSet.next()){
+				result = "impossible";
 			}
 			
 		}catch(Exception e){
 			e.printStackTrace();
-			result="실패";
+			result="impossible";
 		}finally{
 			try{
 				if(resultSet!=null)resultSet.close();
@@ -232,7 +232,7 @@ public class Dao {
 			Statement stat = connection.createStatement();
 			stat.executeQuery(query);
 			
-			query = "INSERT INTO member_info(ID, PASSWORD, REGION, MAIL, TEAM_CODE) VALUES (?, ?, ?, ?, ?)";
+			query = "INSERT INTO member_info(ID, PASSWORD, REGION, MAIL, APPLY_TEAM_CODE) VALUES (?, ?, ?, ?, ?)";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, ID);	//쿼리문 ? 내용
 			preparedStatement.setString(2, Password);
@@ -302,7 +302,7 @@ public class Dao {
 					team_code = resultSet2.getInt("TEAM_CODE");
 				}
 				
-				query = "UPDATE member_info SET LEADER=1,TEAM_CODE=? WHERE ID=?";
+				query = "UPDATE member_info SET LEADER=TRUE,TEAM_CODE=? WHERE ID=?";
 				preparedStatement4 = connection.prepareStatement(query);
 				preparedStatement4.setInt(1, team_code);
 				preparedStatement4.setString(2, leader_id);

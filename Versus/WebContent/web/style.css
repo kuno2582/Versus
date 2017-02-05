@@ -735,6 +735,9 @@ opacity: .1;
     border-radius: 5px;
     border-width: 1px;
 }
+.signUpRegion {
+	float:left;
+}
 .submit_center {
 	text-align:center;
 	width: 100%;
@@ -973,13 +976,13 @@ opacity: .1;
 }
 .resultBtn {
 	text-align:center;
-	display: block;
+	display: inline-block;
 	outline: none;
     padding: 7px 0;
     font-size: 1em;
     color: #fff;
     border: none;
-	width: 33%;
+	width: 32%;
 	background:#24AB00;
     margin:0.5em 0 0;
 	text-transform:uppercase;

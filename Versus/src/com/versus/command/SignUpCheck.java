@@ -19,7 +19,7 @@ public class SignUpCheck implements Command {
 			JSONObject jsonResult = new JSONObject();
 			Dao dao = new Dao();
 			String result1 = dao.signUpCheckId(checkId);
-			jsonResult.put("result",result1);
+			jsonResult.put("checkResult",result1);
 			response.setContentType("application/x-json;charset=utf-8");
 			response.getWriter().print(jsonResult);
 		} catch(Exception e){

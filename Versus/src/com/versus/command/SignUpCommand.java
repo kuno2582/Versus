@@ -11,7 +11,8 @@ public class SignUpCommand implements Command {
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		String ID = request.getParameter("ID"); 
 		String Password = request.getParameter("Password"); 
-		String Region = request.getParameter("Region");
+		String Region = request.getParameter("region1") + " ";
+		Region += request.getParameter("region2");
 		String Email = request.getParameter("Email");
 		int team_code = 0;
 		if(request.getParameter("team_code") != ""){
