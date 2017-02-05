@@ -1215,6 +1215,13 @@ opacity: .1;
 	height: 120px;
 	margin-bottom: 10px;
 	border-radius: 60px;
+	text-align:center;
+	
+}
+#info_teamName {
+	font-size: 20pt;
+	display:inline-block;
+	margin-top: 40px;
 }
 .agileinfo_banner_bottom{
 	width:70%;

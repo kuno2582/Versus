@@ -20,6 +20,7 @@ import com.versus.command.SearchCommand;
 import com.versus.command.SendReportCommand;
 import com.versus.command.SignUpCommand;
 import com.versus.command.TeamInfoCommand;
+import com.versus.command.TeamInfoFixCommand;
 
 @WebServlet("*.do")
 public class FrontController extends HttpServlet {
@@ -121,6 +122,10 @@ public class FrontController extends HttpServlet {
 			command = new TeamInfoCommand();
 			command.execute(request, response);
 			viewPage = "sessionPage.jsp";
+		}else if(comm.equals("TeamInfoFixCommand.do")){
+			command = new TeamInfoFixCommand();
+			command.execute(request, response);
+			viewPage = "main.jsp";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

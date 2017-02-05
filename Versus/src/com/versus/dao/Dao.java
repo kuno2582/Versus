@@ -307,6 +307,7 @@ public class Dao {
 				preparedStatement4.setInt(1, team_code);
 				preparedStatement4.setString(2, leader_id);
 				preparedStatement4.executeUpdate();
+				
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -927,7 +928,7 @@ public class Dao {
 		
 	}//joinTeamAjax()
 	
-	public void memberFix(String leaderID, String secondLeaderID){
+	public void memberFix(int teamCode, String leaderID, String secondLeaderID){
 		
 		String URL = "jdbc:mysql://localhost:3306/versus?useUnicode=true&characterEncoding=euc-kr";		
 		String USER = "root";							
@@ -936,6 +937,7 @@ public class Dao {
 		Connection connection = null;
 		PreparedStatement preparedStatement1 = null;
 		PreparedStatement preparedStatement2 = null;
+		PreparedStatement preparedStatement3 = null;
 		
 		try{
 			Class.forName("com.mysql.jdbc.Driver");	
@@ -954,10 +956,18 @@ public class Dao {
 			preparedStatement2.setString(1, secondLeaderID);	//Äõ¸®¹® ? ³»¿ë
 			preparedStatement2.executeUpdate();
 			
+			query = "UPDATE team_info SET LEADER_ID=?,SECOND_LEADER_ID=? WHERE TEAM_CODE=?";
+			preparedStatement3 = connection.prepareStatement(query);
+			preparedStatement3.setString(1, secondLeaderID);	//Äõ¸®¹® ? ³»¿ë
+			preparedStatement3.setString(1, leaderID);	//Äõ¸®¹® ? ³»¿ë
+			preparedStatement3.setInt(1, teamCode);	//Äõ¸®¹® ? ³»¿ë
+			preparedStatement3.executeUpdate();
+			
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
 			try{
+				if(preparedStatement3!=null)preparedStatement3.close();
 				if(preparedStatement2!=null)preparedStatement2.close();
 				if(preparedStatement1!=null)preparedStatement1.close();
 				if(connection!=null)connection.close();
@@ -968,7 +978,7 @@ public class Dao {
 		
 	}
 	
-	public void memberFix(int act, String targetID){
+	public void memberFix(int teamCode, int act, String targetID){
 		
 		String URL = "jdbc:mysql://localhost:3306/versus?useUnicode=true&characterEncoding=euc-kr";		
 		String USER = "root";							
@@ -988,7 +998,42 @@ public class Dao {
 				query = "UPDATE member_info SET SECOND_LEADER=TRUE WHERE ID=?";
 			}else if(act==2){
 				query = "UPDATE member_info SET SECOND_LEADER=FALSE WHERE ID=?";
-			}else if(act==3){
+			}
+			
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, targetID);	//Äõ¸®¹® ? ³»¿ë
+			preparedStatement.executeUpdate();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try{
+				if(preparedStatement!=null)preparedStatement.close();
+				if(connection!=null)connection.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		
+	}//memberFix act 1 2 
+	
+	public void memberFix(int act, String targetID){
+		
+		String URL = "jdbc:mysql://localhost:3306/versus?useUnicode=true&characterEncoding=euc-kr";		
+		String USER = "root";							
+		String PASS="apmsetup";		
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try{
+			Class.forName("com.mysql.jdbc.Driver");	
+			connection = DriverManager.getConnection(URL, USER, PASS);
+			String query = "SET NAMES euckr";
+			Statement stat = connection.createStatement();
+			stat.executeQuery(query);
+			
+			if(act==3){
 				query = "UPDATE member_info SET TEAM_CODE=0 WHERE ID=?";
 			}else if(act==5){
 				query = "UPDATE member_info SET APPLY_TEAM_CODE=NULL WHERE ID=?";
@@ -1009,7 +1054,7 @@ public class Dao {
 			}
 		}
 		
-	}//memberFix act 1 2 3 5
+	}//memberFix act 3 5
 	
 	public void memberFix(String targetID, int teamCode){
 		
@@ -1077,5 +1122,41 @@ public class Dao {
 			}
 		}
 		
-	}
+	}//teamJoinApply()
+	
+	public void teamInfoFix(int teamCode, String team_phone, String team_region, String team_uniform){
+		
+		String URL = "jdbc:mysql://localhost:3306/versus?useUnicode=true&characterEncoding=euc-kr";		
+		String USER = "root";							
+		String PASS="apmsetup";		
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try{
+			Class.forName("com.mysql.jdbc.Driver");	
+			connection = DriverManager.getConnection(URL, USER, PASS);
+			String query = "SET NAMES euckr";
+			Statement stat = connection.createStatement();
+			stat.executeQuery(query);
+			
+			query = "UPDATE team_info SET PHONE=?,REGION=?,UNIFORM=? WHERE TEAM_CODE=?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, team_phone);	//Äõ¸®¹® ? ³»¿ë
+			preparedStatement.setString(2, team_region);	//Äõ¸®¹® ? ³»¿ë
+			preparedStatement.setString(3, team_uniform);	//Äõ¸®¹® ? ³»¿ë
+			preparedStatement.setInt(4, teamCode);	//Äõ¸®¹® ? ³»¿ë
+			preparedStatement.executeUpdate();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try{
+				if(preparedStatement!=null)preparedStatement.close();
+				if(connection!=null)connection.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		
+	}//teamInfoFix()
 }

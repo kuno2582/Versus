@@ -129,12 +129,28 @@ String anim_class="1";
 			</div>
 		</div>
 		<div class="bottom-teamContent">
-			<div class="bottom-teamName"></div>
-			<br><p>주장: </p><input type="text" id="leader" value="${teamInfo.leader_name}" disabled size="5"><br>
-			<p>부주장: </p><input type="text" id="second_leader" value="${teamInfo.second_leader_name}" disabled size="5"><br>
-			<p>팀 대표 전화: </p><input id="team-phone" disabled size="12" value="${teamInfo.leader_phone}"><br>
-			<p>활동지역: </p><input id="team-region" disabled size="15" value="${teamInfo.region }"><br>
-			<p>유니폼: </p><input id="team-uniform" disabled size="3" value="${teamInfo.uniform }"><br>
+			<div class="bottom-teamName"><span id="info_teamName">${teamInfo.team_name}</span></div>
+				<br><p>주장: </p><p id="leader">
+					<c:forEach items="${teamInfoMember}" var="memberDto" varStatus="Status">
+						<c:if test="${memberDto.id==teamInfo.leader_name}">
+							${memberDto.nickName}&nbsp;
+						</c:if>
+					</c:forEach>
+				</p><br>
+				<p>부주장: </p><p id="second_leader">
+					<c:forEach items="${teamInfoMember}" var="memberDto" varStatus="Status">
+						<c:if test="${memberDto.second_leader}">
+							${memberDto.nickName}&nbsp;
+						</c:if>
+					</c:forEach>
+				</p><br>
+				<form action="TeamInfoFixCommand.do" name="teamInfoFix" method="post">
+					<input type="hidden" name="teamCode" value="${teamInfo.team_code}">
+					<p>팀 대표 전화: </p><input name="team-phone" id="team-phone" disabled size="12" value="${teamInfo.leader_phone}"><br>
+					<p>활동지역: </p><input name="team-region" id="team-region" disabled size="15" value="${teamInfo.region }"><br>
+					<p>유니폼: </p><input name="team-uniform" id="team-uniform" disabled size="3" value="${teamInfo.uniform }"><br>
+					<input type="submit" value="수정하기" style="display:none" id="teamInfoFixBtn">
+				</form>
 			<hr>
 			<div id="teamInfo-target-toggle1">
 				<p>소속팀원: </p><p id="team-member">
@@ -204,6 +220,7 @@ String anim_class="1";
 							</c:if>
 						</c:forEach>
 					</table>
+					<hr>
 				<p>신청인원</p>
 					<table id="applyInfoMemberTable" class="table table-condensed">
 						<tr>
@@ -249,6 +266,7 @@ String anim_class="1";
 			}
 			$('#teamInfo-target-toggle1').toggle();
 			$('#teamInfo-target-toggle2').toggle();
+			$('#teamInfoFixBtn').toggle();
 		});
 	</script>
 
