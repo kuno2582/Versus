@@ -91,7 +91,9 @@ input#start_date {
 	width: 95%;
 	padding: 7px 0;
 }
-
+#id_check {
+	margin-top: 0.4em;
+}
 .team_mark {
 	margin-top: 6px;
 	width: 60px;
@@ -949,6 +951,19 @@ opacity: .1;
     border: none;
     width: 100%;
     background:#24AB00;
+    margin:0.5em 0 0;
+	text-transform:uppercase;
+}
+.signUpBtn {
+	text-align:center;
+	display: block;
+	outline: none;
+    padding: 7px 0;
+    font-size: 1em;
+    color: #fff;
+    border: none;
+    width: 100%;
+    background:#ff0000;
     margin:0.5em 0 0;
 	text-transform:uppercase;
 }
@@ -2274,7 +2289,7 @@ ul.contact_info li a:hover{
     color: #212121;
     text-transform: uppercase;
     font-weight: 600;
-    padding-top: 1em; 
+    padding-top: 0.8em; 
 }
 #w3_country,.w3_modal_body_grid input[type="text"],.w3_modal_body_grid input[type="email"],#w3_country1,.w3_modal_body_grid input[type="password"]{
 	width:70%;
@@ -2291,7 +2306,7 @@ ul.contact_info li a:hover{
 	display: inline-block;
 }
 .w3_modal_body_grid input[name="ID"], .w3_modal_body_grid input[type="password"], .w3_modal_body_grid input[name="team-name"] {
-	width: 50%;
+	width: 40%;
 }
 .w3_modal_body_grid1{
 	margin:1em 0;

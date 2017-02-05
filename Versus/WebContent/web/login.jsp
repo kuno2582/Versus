@@ -17,14 +17,21 @@
 				result = "Match!";
 				$('#pwch').css('padding-top','1em');
 				$('#pwch').css('color','green');
+				$('#pwCheckVal').val('OK');
+				if($('#idCheckVal').val()=='OK' && $('#pwCheckVal').val()=='OK'){
+					$('.signUpBtn').css('background','#24AB00');
+				}
 			}else{
 				result = "Not Match!";
 				$('#pwch').css('padding-top','4px');
 				$('#pwch').css('color','red');
+				$('.signUpBtn').css('background','#ff0000');
+				$('#pwCheckVal').val("");
 			}
 			
-			$('#pwch').html(result);	
+			$('#pwch').html(result);
 		});	
+		
 	});
 </script>
 <div id="small-dialog" class="mfp-hide w3ls_small_dialog">
@@ -61,6 +68,8 @@
 	<h2>회원가입</h2>
 	<div class="modal-body w3_agileits_modal_body">
 		<form action="signUp.do" method="post" name="vForm">
+			<input type="hidden" value="" id="idCheckVal">
+			<input type="hidden" value="" id="pwCheckVal">
 			<div class="w3_modal_body_grid w3_modal_body_grid1">
 				<span>아이디</span><input id="idCheck1" style="padding:10px;font-size:14px;display:inline-block;float:left; type="text" name="ID" required autofocus/>
 				<input type="button" value="중복확인" id="id_check">
@@ -84,7 +93,7 @@
 				<span>팀코드</span> <input type="text" name="team_code" />
 			</div>
 			
-			<input type="submit" value="Sign Up">
+			<input type="button" value="Sign Up" onclick="signUpSubmit()" class="signUpBtn">
 		</form>
 		<h5>
 			이미 회원이십니까? <a href="#small-dialog"

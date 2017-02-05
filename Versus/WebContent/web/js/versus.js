@@ -65,6 +65,11 @@ $(window).load(function() {
 			$(".btn-nav").toggleClass("animated");
 	});
 	
+	$('#idCheck1').keyup(function(){
+		$('#idCheckVal').val("");
+		$('.signUpBtn').css('background','#ff0000');
+	});
+	
 });
 
 //가입하러가기 팀정보불러오기 에이잭스
@@ -108,3 +113,11 @@ function applyButton(teamCode){
 	$('#apply_teamCode').val(teamCode);
 	$(applyTeamForm).submit();
 }
+
+function signUpSubmit(){
+	if($('#idCheckVal').val()=='OK' && $('#pwCheckVal').val()=='OK'){
+		$(vForm).submit();
+	}
+}
+
+

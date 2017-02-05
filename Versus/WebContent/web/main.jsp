@@ -363,8 +363,10 @@ Boolean firstLoad = false;
 			datatype:"JSON",
 			contentType: "application/x-www-form-urlencoded; charset=EUC-KR",
 			success:function(obj){
-				
-				alert(obj.result);
+				$('#idCheckVal').val('OK');
+				if($('#idCheckVal').val()=='OK' && $('#pwCheckVal').val()=='OK'){
+					$('.signUpBtn').css('background','#24AB00');
+				}
 			}
 		});
 	});
