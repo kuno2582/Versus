@@ -41,8 +41,10 @@
 		<a href="info.do?teamCode="<%=session.getAttribute("teamCode")%>>≈ª≈«œ∑Ø ∞°±‚</a>	
 	<%}else{%>
 	<h2>∆¿ ∏Ò∑œ</h2>
-	<form>
-		<input type="hidden" name="teamJoinId" value="<%=session.getAttribute("id")%>">
+	<form name="applyTeamForm" action="memberFix.do">
+		<input type="hidden" name="id" value="<%=session.getAttribute("id")%>">
+		<input id="apply_teamCode" type="hidden" name="teamCode" value="">
+		<input type="hidden" name="act" value="6">
 		<table id="joinTeamTable" class="table table-condensed">
 			<tr>
 				<td>∆¿¿Ã∏ß</td>

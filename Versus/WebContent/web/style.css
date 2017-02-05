@@ -1191,6 +1191,9 @@ opacity: .1;
 	width: 100%;
 	padding: 20px;
 }
+#teamInfo-target-toggle2 {
+	margin-bottom: 40px;
+}
 .bottom-teamContent input {
 	font-size: 14pt;
 	background: white;

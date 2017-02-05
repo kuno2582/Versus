@@ -81,7 +81,7 @@ $('.joinTeamA').click(function(){
 			
 			for(var i in data){
 				var str = "<tr><td><a href='#' onclick='joinInfo("+i+")' class='popup-with-zoom-anim'>"+data[i].team_name+"</a></td><td>"+data[i].leader_id+
-				"</td><td><input type='submit' value='가입신청'></td></tr>"+				
+				"</td><td><input type='button' value='가입신청' onclick='applyButton("+data[i].team_Code+")'></td></tr>"+				
 					"<tr><td colspan='3'><table id='smallTeamInfo"+i+"' class='table table-condensed' style='display:none'>" +
 					"<tr><td>리더ID</td><td>"+data[i].leader_id+"</td></tr>" + 
 					"<tr><td>부리더ID</td><td>"+data[i].second_leader_id+"</td></tr>" + 
@@ -102,4 +102,9 @@ $('.joinTeamA').click(function(){
 
 function joinInfo(i){
 	$('#smallTeamInfo'+i).toggle();
+}
+
+function applyButton(teamCode){
+	$('#apply_teamCode').val(teamCode);
+	$(applyTeamForm).submit();
 }

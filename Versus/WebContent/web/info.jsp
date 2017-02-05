@@ -156,7 +156,7 @@ String anim_class="1";
 				<p>승률: </p><p id="team-winRate">${teamInfo.win}/${teamInfo.lose}/${teamInfo.draw} ${(teamInfo.win)/(teamInfo.lose+teamInfo.win)*100}%</p><br>
 				<p>패널티: </p><p id="team-pannelty">경고횟수 ${teamInfo.penalty}회</p><br>
 			</div>
-			<div id="teamInfo-target-toggle2" >
+			<div id="teamInfo-target-toggle2" style="display:none">
 				<p>소속팀원</p>
 					<table id="teamInfoMemberTable" class="table table-condensed">
 						<tr>
@@ -205,8 +205,20 @@ String anim_class="1";
 						</c:forEach>
 					</table>
 				<p>신청인원</p>
-					<table id="teamInfoMemberTable" class="table table-condensed">
-						
+					<table id="applyInfoMemberTable" class="table table-condensed">
+						<tr>
+							<td>닉네임</td><td>지역</td><td>수락</td><td>거절</td>
+						</tr>
+						<c:forEach items="${teamInfoMember}" var="applyMemberDto">
+							<c:if test="${applyMemberDto.teamCode ne teamInfo.team_code}">
+								<tr>
+									<td>${applyMemberDto.nickName}</td>
+									<td>${applyMemberDto.region}</td>
+									<td><a href="memberFix.do?id=<%=session.getAttribute("id")%>&teamCode=<%=session.getAttribute("teamCode")%>&act=4&targetID=${applyMemberDto.id}">수락</a></td>
+									<td><a href="memberFix.do?id=<%=session.getAttribute("id")%>&teamCode=<%=session.getAttribute("teamCode")%>&act=5&targetID=${applyMemberDto.id}">거절</a></td>
+								</tr>
+							</c:if>
+						</c:forEach>
 					</table>
 			</div>
 		</div>
@@ -234,7 +246,9 @@ String anim_class="1";
 				$('.con-cell b').html('팀 정보 관리');
 				$('.bottom-teaminfo-right img').attr('src','images/teamInfoFixConfirm.png');
 				$('.bottom-teamContent input').css('background','rgb(235,235,228)').css('border','1px solid gray').removeAttr('disabled');
-			}					
+			}
+			$('#teamInfo-target-toggle1').toggle();
+			$('#teamInfo-target-toggle2').toggle();
 		});
 	</script>
 

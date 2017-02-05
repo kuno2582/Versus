@@ -990,12 +990,82 @@ public class Dao {
 				query = "UPDATE member_info SET SECOND_LEADER=FALSE WHERE ID=?";
 			}else if(act==3){
 				query = "UPDATE member_info SET TEAM_CODE=0 WHERE ID=?";
+			}else if(act==5){
+				query = "UPDATE member_info SET APPLY_TEAM_CODE=NULL WHERE ID=?";
 			}
 			
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, targetID);	//Äõ¸®¹® ? ³»¿ë
 			preparedStatement.executeUpdate();
 			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try{
+				if(preparedStatement!=null)preparedStatement.close();
+				if(connection!=null)connection.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		
+	}//memberFix act 1 2 3 5
+	
+	public void memberFix(String targetID, int teamCode){
+		
+		String URL = "jdbc:mysql://localhost:3306/versus?useUnicode=true&characterEncoding=euc-kr";		
+		String USER = "root";							
+		String PASS="apmsetup";		
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try{
+			Class.forName("com.mysql.jdbc.Driver");	
+			connection = DriverManager.getConnection(URL, USER, PASS);
+			String query = "SET NAMES euckr";
+			Statement stat = connection.createStatement();
+			stat.executeQuery(query);
+			
+			query = "UPDATE member_info SET TEAM_CODE=?,APPLY_TEAM_CODE=NULL WHERE ID=?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, teamCode);	//Äõ¸®¹® ? ³»¿ë
+			preparedStatement.setString(2, targetID);	//Äõ¸®¹® ? ³»¿ë
+			preparedStatement.executeUpdate();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try{
+				if(preparedStatement!=null)preparedStatement.close();
+				if(connection!=null)connection.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		
+	}//memberFix act 4
+	
+	public void teamJoinApply(String teamJoinId, int teamCode){
+		
+		String URL = "jdbc:mysql://localhost:3306/versus?useUnicode=true&characterEncoding=euc-kr";		
+		String USER = "root";							
+		String PASS="apmsetup";		
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try{
+			Class.forName("com.mysql.jdbc.Driver");	
+			connection = DriverManager.getConnection(URL, USER, PASS);
+			String query = "SET NAMES euckr";
+			Statement stat = connection.createStatement();
+			stat.executeQuery(query);
+			
+			query = "UPDATE member_info SET APPLY_TEAM_CODE=? WHERE ID=?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, teamCode);	//Äõ¸®¹® ? ³»¿ë
+			preparedStatement.setString(2, teamJoinId);	//Äõ¸®¹® ? ³»¿ë
+			preparedStatement.executeUpdate();
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
