@@ -57,20 +57,34 @@ String anim_class="";
 %>
 	<jsp:include page="login.jsp" flush="true"/>
 	<jsp:include page="maketeam.jsp" flush="true"/>
+	<jsp:include page="hasNoTeam.jsp" flush="true"/>
 	<div class="nav-container hidden hideNav w3_nav">
 		<ul class="nav-list">
-			<li class="list-item active"><a href="main.jsp"><i
+			<%if(session.getAttribute("memberInfo")==null){
+				ft_nav2="#make-team";
+				ft_nav3="#make-team";
+				anim_class="popup-with-zoom-anim";
+			}else if(session.getAttribute("memberInfo")!=null){
+				ft_nav2="matchStatus.do?teamCode="+session.getAttribute("teamCode");
+				ft_nav3="info.do?teamCode="+session.getAttribute("teamCode");
+				anim_class="";
+				if((Integer)session.getAttribute("teamCode")==0){
+					ft_nav3="#hasNoTeam";
+					anim_class="popup-with-zoom-anim";
+				}
+			}%>
+			<li class="list-item active"><a href="searchMatch.do"><i
 					class="glyphicon glyphicon-home"></i></a></li>
-			<li class="list-item"><a href="matchstatus.jsp"><i
-					class="glyphicon glyphicon-info-sign" ></i></a></li>
-			<li class="list-item"><a href="info.jsp"><i
-					class="glyphicon glyphicon-cog"></i></a></li>
-			<li class="list-item"><a href="faq.jsp"><i
-					class="glyphicon glyphicon-text-size" ></i></a></li>
-			<li class="list-item"><a href="#make-team" class="popup-with-zoom-anim"><i
-					class="glyphicon glyphicon-picture"></i></a></li>
-			<li class="list-item"><a href="#make_match" class="popup-with-zoom-anim"><i
-					class="glyphicon glyphicon-envelope"></i></a></li>
+			<li class="list-item"><a href="<%=ft_nav2%>" class="<%=anim_class%>">
+				<span>매치정보</span></a></li>
+			<li class="list-item"><a href="<%=ft_nav3%>" class="<%=anim_class%>">
+				<span>팀정보</span></a></li>
+			<li class="list-item"><a href="faq.do">
+				<span>FAQ</span></a></li>
+			<li class="list-item"><a href="#make-team" class="popup-with-zoom-anim">
+				<span>팀만들기</span></a></li>
+			<li class="list-item"><a href="#joinTeam" class="popup-with-zoom-anim joinTeamA">
+				<span>팀가입</span></a></li>
 		</ul>
 	</div>
 	<div id="ban" class="agileinfo_menu w3l_menu">
@@ -152,15 +166,6 @@ String anim_class="";
 		</div>
 		
 		<div class="footer_nav">
-			<%if(session.getAttribute("memberInfo")==null){
-				ft_nav2="#make-team";
-				ft_nav3="#make-team";
-				anim_class="popup-with-zoom-anim";
-			}else if(session.getAttribute("memberInfo")!=null){
-				ft_nav2="matchStatus.do?teamCode="+session.getAttribute("teamCode");
-				ft_nav3="info.do?teamCode="+session.getAttribute("teamCode");
-				anim_class="";
-			}%>
 			<div class="ft_nav1"><a href="searchMatch.do"><img src="images/matching.png" width="40px" height="40px"></a></div>
 			<div class="ft_nav2"><a href="<%=ft_nav2%>" class="<%=anim_class%>"><img src="images/status.png" width="40px" height="40px"></a></div>
 			<div class="ft_nav3"><a href="<%=ft_nav3%>" class="<%=anim_class%>"><img src="images/teamInfo.png" width="40px" height="40px"></a></div>

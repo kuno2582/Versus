@@ -8,6 +8,9 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import com.versus.dto.CommentDto;
 import com.versus.dto.FaqDto;
 import com.versus.dto.InputMemberInfoDto;
@@ -661,9 +664,10 @@ public class Dao {
 			Statement stat = connection.createStatement();
 			stat.executeQuery(query);
 			
-			query = "SELECT * FROM member_info WHERE TEAM_CODE=?";
+			query = "SELECT * FROM member_info WHERE TEAM_CODE=? OR APPLY_TEAM_CODE=?";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, teamCode);	//Äõ¸®¹® ? ³»¿ë
+			preparedStatement.setInt(2, teamCode);	//Äõ¸®¹® ? ³»¿ë
 			resultSet = preparedStatement.executeQuery();
 			
 			while(resultSet.next()){
@@ -850,6 +854,146 @@ public class Dao {
 			preparedStatement.setString(1, report_id);	//Äõ¸®¹® ? ³»¿ë
 			preparedStatement.setString(2, reportee_teamName);
 			preparedStatement.setString(3, content);
+			preparedStatement.executeUpdate();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try{
+				if(preparedStatement!=null)preparedStatement.close();
+				if(connection!=null)connection.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		
+	}//sendReport()
+	
+	public JSONArray joinTeamAjax(){
+		
+		String URL = "jdbc:mysql://localhost:3306/versus?useUnicode=true&characterEncoding=euc-kr";		
+		String USER = "root";							
+		String PASS="apmsetup";		
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		JSONArray jsonArray = new JSONArray();
+		
+		try{
+			
+			Class.forName("com.mysql.jdbc.Driver");	
+			connection = DriverManager.getConnection(URL, USER, PASS);
+			String query = "SET NAMES euckr";
+			Statement stat = connection.createStatement();
+			stat.executeQuery(query);
+			
+			query = "SELECT * FROM team_info";
+			preparedStatement = connection.prepareStatement(query);
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()){
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put("team_Code", resultSet.getInt("TEAM_CODE"));
+				jsonObject.put("team_name", resultSet.getString("TEAM_NAME"));
+				jsonObject.put("leader_id", resultSet.getString("LEADER_ID"));
+				jsonObject.put("second_leader_id", resultSet.getString("SECOND_LEADER_ID"));
+				jsonObject.put("phone", resultSet.getString("PHONE"));
+				jsonObject.put("region", resultSet.getString("REGION"));
+				jsonObject.put("uniform", resultSet.getString("UNIFORM"));
+				jsonObject.put("level", resultSet.getInt("LEVEL"));
+				jsonObject.put("win", resultSet.getInt("WIN"));
+				jsonObject.put("lose", resultSet.getInt("LOSE"));
+				jsonObject.put("draw", resultSet.getInt("DRAW"));
+				jsonObject.put("penalty", resultSet.getInt("PENALTY"));
+
+				jsonArray.add(jsonObject);
+				
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try{
+				if(resultSet!=null)resultSet.close();
+				if(preparedStatement!=null)preparedStatement.close();
+				if(connection!=null)connection.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		return jsonArray;
+		
+	}//joinTeamAjax()
+	
+	public void memberFix(String leaderID, String secondLeaderID){
+		
+		String URL = "jdbc:mysql://localhost:3306/versus?useUnicode=true&characterEncoding=euc-kr";		
+		String USER = "root";							
+		String PASS="apmsetup";		
+
+		Connection connection = null;
+		PreparedStatement preparedStatement1 = null;
+		PreparedStatement preparedStatement2 = null;
+		
+		try{
+			Class.forName("com.mysql.jdbc.Driver");	
+			connection = DriverManager.getConnection(URL, USER, PASS);
+			String query = "SET NAMES euckr";
+			Statement stat = connection.createStatement();
+			stat.executeQuery(query);
+			
+			query = "UPDATE member_info SET LEADER=FALSE,SECOND_LEADER=TRUE WHERE ID=?";
+			preparedStatement1 = connection.prepareStatement(query);
+			preparedStatement1.setString(1, leaderID);	//Äõ¸®¹® ? ³»¿ë
+			preparedStatement1.executeUpdate();
+			
+			query = "UPDATE member_info SET LEADER=TRUE,SECOND_LEADER=FALSE WHERE ID=?";
+			preparedStatement2 = connection.prepareStatement(query);
+			preparedStatement2.setString(1, secondLeaderID);	//Äõ¸®¹® ? ³»¿ë
+			preparedStatement2.executeUpdate();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try{
+				if(preparedStatement2!=null)preparedStatement2.close();
+				if(preparedStatement1!=null)preparedStatement1.close();
+				if(connection!=null)connection.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	public void memberFix(int act, String targetID){
+		
+		String URL = "jdbc:mysql://localhost:3306/versus?useUnicode=true&characterEncoding=euc-kr";		
+		String USER = "root";							
+		String PASS="apmsetup";		
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try{
+			Class.forName("com.mysql.jdbc.Driver");	
+			connection = DriverManager.getConnection(URL, USER, PASS);
+			String query = "SET NAMES euckr";
+			Statement stat = connection.createStatement();
+			stat.executeQuery(query);
+			
+			if(act==1){
+				query = "UPDATE member_info SET SECOND_LEADER=TRUE WHERE ID=?";
+			}else if(act==2){
+				query = "UPDATE member_info SET SECOND_LEADER=FALSE WHERE ID=?";
+			}else if(act==3){
+				query = "UPDATE member_info SET TEAM_CODE=0 WHERE ID=?";
+			}
+			
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, targetID);	//Äõ¸®¹® ? ³»¿ë
 			preparedStatement.executeUpdate();
 			
 		}catch(Exception e){

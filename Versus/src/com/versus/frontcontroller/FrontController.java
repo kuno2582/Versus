@@ -15,6 +15,7 @@ import com.versus.command.FaqCommand;
 import com.versus.command.LoginCheck;
 import com.versus.command.MakeMatchCommand;
 import com.versus.command.MakeTeamCommand;
+import com.versus.command.MemberFix;
 import com.versus.command.SearchCommand;
 import com.versus.command.SendReportCommand;
 import com.versus.command.SignUpCommand;
@@ -114,6 +115,12 @@ public class FrontController extends HttpServlet {
 			command = new SendReportCommand();
 			command.execute(request, response);
 			viewPage = "main.jsp";
+		}else if(comm.equals("memberFix.do")){
+			command = new MemberFix();
+			command.execute(request, response);
+			command = new TeamInfoCommand();
+			command.execute(request, response);
+			viewPage = "sessionPage.jsp";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

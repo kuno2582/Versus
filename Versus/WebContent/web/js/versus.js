@@ -66,3 +66,40 @@ $(window).load(function() {
 	});
 	
 });
+
+//가입하러가기 팀정보불러오기 에이잭스
+$('.joinTeamA').click(function(){
+	$.ajax({
+		type:'GET',
+		url:"joinTeam.ajax",
+		datatype:"JSON",
+		contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+		success:function(obj){
+			var data = JSON.parse(obj);
+			$('#joinTeamTable').empty();
+			$('#joinTeamTable').append('<tr><td>팀이름</td><td>주장</td><td>&nbsp;</td></tr>');
+			
+			for(var i in data){
+				var str = "<tr><td><a href='#' onclick='joinInfo("+i+")' class='popup-with-zoom-anim'>"+data[i].team_name+"</a></td><td>"+data[i].leader_id+
+				"</td><td><input type='submit' value='가입신청'></td></tr>"+				
+					"<tr><td colspan='3'><table id='smallTeamInfo"+i+"' class='table table-condensed' style='display:none'>" +
+					"<tr><td>리더ID</td><td>"+data[i].leader_id+"</td></tr>" + 
+					"<tr><td>부리더ID</td><td>"+data[i].second_leader_id+"</td></tr>" + 
+					"<tr><td>대표전화번호</td><td>"+data[i].phone+"</td></tr>" + 
+					"<tr><td>주요경기지역</td><td>"+data[i].region+"</td></tr>" + 
+					"<tr><td>유니폼</td><td>"+data[i].uniform+"</td></tr>" + 
+					"<tr><td>Level</td><td>"+data[i].level+"</td></tr>" + 
+					"<tr><td>승</td><td>"+data[i].win+"</td></tr>" + 
+					"<tr><td>패</td><td>"+data[i].lose+"</td></tr>" + 
+					"<tr><td>무승부</td><td>"+data[i].draw+"</td></tr>" + 
+					"<tr><td>경고횟수</td><td>"+data[i].penalty+"</td></tr>" + 
+					"</table><td><tr>";
+				$('#joinTeamTable').append(str);
+			}
+		}
+	});
+});
+
+function joinInfo(i){
+	$('#smallTeamInfo'+i).toggle();
+}

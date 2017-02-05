@@ -22,7 +22,7 @@
 <!-- Custom Theme files -->
 <link href="css/bootstrap.css" type="text/css" rel="stylesheet"
 	media="all">
-<link href="css/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="style.css" type="text/css" rel="stylesheet" media="all">
 <link rel='stylesheet' id='fluid_dg-css' href='css/fluid_dg.css'
 	type='text/css' media='all'>
 <link href="css/popuo-box.css" rel="stylesheet" type="text/css"
@@ -55,20 +55,34 @@ String anim_class="1";
 %>
 	<jsp:include page="login.jsp" flush="true"/>
 	<jsp:include page="maketeam.jsp" flush="true"/>
+	<jsp:include page="hasNoTeam.jsp" flush="true"/>
 	<div class="nav-container hidden hideNav w3_nav">
 		<ul class="nav-list">
-			<li class="list-item active"><a href="main.jsp"><i
+			<%if(session.getAttribute("memberInfo")==null){
+				ft_nav2="#make-team";
+				ft_nav3="#make-team";
+				anim_class="popup-with-zoom-anim";
+			}else if(session.getAttribute("memberInfo")!=null){
+				ft_nav2="matchStatus.do?teamCode="+session.getAttribute("teamCode");
+				ft_nav3="info.do?teamCode="+session.getAttribute("teamCode");
+				anim_class="";
+				if((Integer)session.getAttribute("teamCode")==0){
+					ft_nav3="#hasNoTeam";
+					anim_class="popup-with-zoom-anim";
+				}
+			}%>
+			<li class="list-item active"><a href="searchMatch.do"><i
 					class="glyphicon glyphicon-home"></i></a></li>
-			<li class="list-item"><a href="matchstatus.jsp"><i
-					class="glyphicon glyphicon-info-sign" ></i></a></li>
-			<li class="list-item"><a href="info.jsp"><i
-					class="glyphicon glyphicon-cog"></i></a></li>
-			<li class="list-item"><a href="faq.jsp"><i
-					class="glyphicon glyphicon-text-size" ></i></a></li>
-			<li class="list-item"><a href="#make-team" class="popup-with-zoom-anim"><i
-					class="glyphicon glyphicon-picture"></i></a></li>
-			<li class="list-item"><a href="#make_match" class="popup-with-zoom-anim"><i
-					class="glyphicon glyphicon-envelope"></i></a></li>
+			<li class="list-item"><a href="<%=ft_nav2%>" class="<%=anim_class%>">
+				<span>매치정보</span></a></li>
+			<li class="list-item"><a href="<%=ft_nav3%>" class="<%=anim_class%>">
+				<span>팀정보</span></a></li>
+			<li class="list-item"><a href="faq.do">
+				<span>FAQ</span></a></li>
+			<li class="list-item"><a href="#make-team" class="popup-with-zoom-anim">
+				<span>팀만들기</span></a></li>
+			<li class="list-item"><a href="#joinTeam" class="popup-with-zoom-anim joinTeamA">
+				<span>팀가입</span></a></li>
 		</ul>
 	</div>
 	<div id="ban" class="agileinfo_menu w3l_menu">
@@ -122,27 +136,81 @@ String anim_class="1";
 			<p>활동지역: </p><input id="team-region" disabled size="15" value="${teamInfo.region }"><br>
 			<p>유니폼: </p><input id="team-uniform" disabled size="3" value="${teamInfo.uniform }"><br>
 			<hr>
-			<p>소속팀원: </p><p id="team-member">
-				<c:forEach items="${teamInfoMember}" var="memberDto" varStatus="Status">
-				${memberDto.nickName}&nbsp;
-				</c:forEach>
-			</p><br>
-			<hr>
-			<p>신청대기인원: </p><p id="waiting">임정환, 김윤호</p><br>
-			<p>Level: </p><p id="team-level">${teamInfo.level}</p><br>
-			<p>승률: </p><p id="team-winRate">${teamInfo.win}/${teamInfo.lose}/${teamInfo.draw} ${(teamInfo.win)/(teamInfo.lose+teamInfo.win)*100}%</p><br>
-			<p>패널티: </p><p id="team-pannelty">경고횟수 ${teamInfo.penalty}회</p><br>
+			<div id="teamInfo-target-toggle1">
+				<p>소속팀원: </p><p id="team-member">
+					<c:forEach items="${teamInfoMember}" var="memberDto" varStatus="Status">
+						<c:if test="${memberDto.teamCode==teamInfo.team_code}">
+							${memberDto.nickName}&nbsp;
+						</c:if>
+					</c:forEach>
+				</p><br>
+				<p>신청대기인원: </p><p id="waiting">
+					<c:forEach items="${teamInfoMember}" var="memberDto" varStatus="Status">
+						<c:if test="${memberDto.teamCode!=teamInfo.team_code}">
+							${memberDto.nickName}&nbsp;
+						</c:if>
+					</c:forEach>
+				</p><br>
+				<hr>
+				<p>Level: </p><p id="team-level">${teamInfo.level}</p><br>
+				<p>승률: </p><p id="team-winRate">${teamInfo.win}/${teamInfo.lose}/${teamInfo.draw} ${(teamInfo.win)/(teamInfo.lose+teamInfo.win)*100}%</p><br>
+				<p>패널티: </p><p id="team-pannelty">경고횟수 ${teamInfo.penalty}회</p><br>
+			</div>
+			<div id="teamInfo-target-toggle2" >
+				<p>소속팀원</p>
+					<table id="teamInfoMemberTable" class="table table-condensed">
+						<tr>
+							<td>닉네임</td><td>지역</td><td>직위</<td><td>위임</td><td>제명</td>
+						</tr>
+						<c:forEach items="${teamInfoMember}" var="memberDto" varStatus="memberCount">
+							<c:if test="${memberDto.teamCode==teamInfo.team_code}">
+								<tr>
+									<td>${memberDto.nickName}</td>
+									<td>${memberDto.region}</td>
+									<td>
+										<c:choose>
+											<c:when test="${memberDto.leader}">Leader</c:when>
+											<c:when test="${memberDto.second_leader}">Second Leader</c:when>
+											<c:otherwise>Member</c:otherwise>
+										</c:choose>
+									</td>
+									<td>
+										<c:choose>
+											<c:when test="${memberDto.second_leader}">
+												<%if((Boolean)session.getAttribute("isLeader")==true){%>
+													<a href="memberFix.do?id=<%=session.getAttribute("id")%>&teamCode=<%=session.getAttribute("teamCode")%>&act=0&leaderID=<%=session.getAttribute("id")%>&secondLeaderID=${memberDto.id}">리더 위임</a>
+												<%}%>
+											</c:when>
+											<c:when test="${memberDto.second_leader==false and memberDto.leader==false}">
+												<%if((Boolean)session.getAttribute("isLeader")==true){%>
+													<a href="memberFix.do?id=<%=session.getAttribute("id")%>&teamCode=<%=session.getAttribute("teamCode")%>&act=1&targetID=${memberDto.id}">부리더 위임</a>
+												<%}%>
+											</c:when>
+										</c:choose>
+									</td>
+									<td>
+										<c:choose>
+											<c:when test="${memberDto.second_leader}">
+												<%if((Boolean)session.getAttribute("isLeader")==true){%>
+													<a href="memberFix.do?id=<%=session.getAttribute("id")%>&teamCode=<%=session.getAttribute("teamCode")%>&act=2&targetID=${memberDto.id}">권한박탈</a>
+												<%}%>
+											</c:when>
+											<c:when test="${memberDto.second_leader==false and memberDto.leader==false}">
+												<a href="memberFix.do?id=<%=session.getAttribute("id")%>&teamCode=<%=session.getAttribute("teamCode")%>&act=3&targetID=${memberDto.id}">제명</a>
+											</c:when>
+										</c:choose>
+									</td>
+								</tr>
+							</c:if>
+						</c:forEach>
+					</table>
+				<p>신청인원</p>
+					<table id="teamInfoMemberTable" class="table table-condensed">
+						
+					</table>
+			</div>
 		</div>
 		<div class="footer_nav">
-			<%if(session.getAttribute("memberInfo")==null){
-				ft_nav2="#make-team";
-				ft_nav3="#make-team";
-				anim_class="popup-with-zoom-anim";
-			}else if(session.getAttribute("memberInfo")!=null){
-				ft_nav2="matchStatus.do?teamCode="+session.getAttribute("teamCode");
-				ft_nav3="info.do?teamCode="+session.getAttribute("teamCode");
-				anim_class="";
-			}%>
 			<div class="ft_nav1"><a href="searchMatch.do"><img src="images/matching.png" width="40px" height="40px"></a></div>
 			<div class="ft_nav2"><a href="<%=ft_nav2%>" class="<%=anim_class%>"><img src="images/status.png" width="40px" height="40px"></a></div>
 			<div class="ft_nav3"><a href="<%=ft_nav3%>" class="<%=anim_class%>"><img src="images/teamInfo.png" width="40px" height="40px"></a></div>

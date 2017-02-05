@@ -347,7 +347,7 @@ button {
 .list-item {
   margin: 20px auto;
   border: 2px solid #fff;
-  width:70px;
+  width:90%;
   -webkit-transition: all 1s ease;
   -moz-transition: all 1s ease;
   -ms-transition: all 1s ease;
@@ -384,6 +384,20 @@ li.list-item.active a {
   transition: all 1s ease;
 }
 
+.list-item:hover span {
+  color: #212121;
+  -webkit-transform: scale(1.5);
+  -moz-transform: scale(1.5);
+  -ms-transform: scale(1.5);
+  -o-transform: scale(1.5);
+  transform: scale(1.5);
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
 .list-item a {
   color: #fff;
   font-size: 1.7em;
@@ -398,6 +412,11 @@ li.list-item.active a {
   -ms-transition: all 1s ease;
   -o-transition: all 1s ease;
   transition: all 1s ease;
+}
+.info-icon {
+	background: url(images/status.png);
+	width: 50px;
+	height: 50px;
 }
  @keyframes 
 showNav { from {
@@ -673,7 +692,22 @@ opacity: .1;
     color: #212121;
 	font-family: 'Nunito', sans-serif;
 }
+.w3ls_small_dialog {
+	background: #fff;
+}
+.w3ls_small_dialog h2{
+    padding: 15px;
+    text-align: center;
+    background:#F7DD2C;
+    color: #212121;
+    font-size:22px;
+	font-family: 'Nunito', sans-serif;
+}
 #make-team {
+	opacity: 1;
+	background: #fff;
+}
+#joinTeam {
 	opacity: 1;
 	background: #fff;
 }
@@ -1107,6 +1141,8 @@ opacity: .1;
 	display: inline-block;
 	padding-left: 10px;
 	border: 1px solid gray;
+	overflow: auto;
+	overflow-x: hidden;
 }
 #faq-div {
 	width: 90%;
@@ -1152,9 +1188,7 @@ opacity: .1;
 	overflow: hidden;
 }
 .bottom-teamContent {
-	border: 1px solid gray;
 	width: 100%;
-	height: 484px;
 	padding: 20px;
 }
 .bottom-teamContent input {
@@ -2422,7 +2456,7 @@ nav.w3agile_paging {
 	}
 	.list-item {
 		margin: 15px auto;
-		width: 50px;
+		width: 90%;
 	}
 	.list-item a {
 		padding: 5px;

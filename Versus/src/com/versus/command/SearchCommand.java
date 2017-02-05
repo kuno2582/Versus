@@ -22,7 +22,7 @@ public class SearchCommand implements Command {
 		
 		String region1="";
 		String region2="";
-		if(request.getAttribute("region1")!=null){
+		if(request.getParameter("region1")!=null){
 			region1 = request.getParameter("region1");
 			region2 = request.getParameter("region2");
 		}

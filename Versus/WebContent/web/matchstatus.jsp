@@ -22,7 +22,7 @@
 <!-- Custom Theme files -->
 <link href="css/bootstrap.css" type="text/css" rel="stylesheet"
 	media="all">
-<link href="css/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="style.css" type="text/css" rel="stylesheet" media="all">
 <link rel='stylesheet' id='fluid_dg-css' href='css/fluid_dg.css'
 	type='text/css' media='all'>
 <link href="css/popuo-box.css" rel="stylesheet" type="text/css"
@@ -56,21 +56,34 @@ String anim_class="";
 <body class="bg">
 	<jsp:include page="login.jsp" flush="true"/>
 	<jsp:include page="maketeam.jsp" flush="true"/>
-	<%-- <jsp:include page="matchInformation.jsp" flush="true"/> --%>
+	<jsp:include page="hasNoTeam.jsp" flush="true"/>
 	<div class="nav-container hidden hideNav w3_nav">
 		<ul class="nav-list">
-			<li class="list-item active"><a href="main.jsp"><i
+			<%if(session.getAttribute("memberInfo")==null){
+				ft_nav2="#make-team";
+				ft_nav3="#make-team";
+				anim_class="popup-with-zoom-anim";
+			}else if(session.getAttribute("memberInfo")!=null){
+				ft_nav2="matchStatus.do?teamCode="+session.getAttribute("teamCode");
+				ft_nav3="info.do?teamCode="+session.getAttribute("teamCode");
+				anim_class="";
+				if((Integer)session.getAttribute("teamCode")==0){
+					ft_nav3="#hasNoTeam";
+					anim_class="popup-with-zoom-anim";
+				}
+			}%>
+			<li class="list-item active"><a href="searchMatch.do"><i
 					class="glyphicon glyphicon-home"></i></a></li>
-			<li class="list-item"><a href="matchstatus.jsp"><i
-					class="glyphicon glyphicon-info-sign" ></i></a></li>
-			<li class="list-item"><a href="info.jsp"><i
-					class="glyphicon glyphicon-cog"></i></a></li>
-			<li class="list-item"><a href="faq.jsp"><i
-					class="glyphicon glyphicon-text-size" ></i></a></li>
-			<li class="list-item"><a href="#make-team" class="popup-with-zoom-anim"><i
-					class="glyphicon glyphicon-picture"></i></a></li>
-			<li class="list-item"><a href="#make_match" class="popup-with-zoom-anim"><i
-					class="glyphicon glyphicon-envelope"></i></a></li>
+			<li class="list-item"><a href="<%=ft_nav2%>" class="<%=anim_class%>">
+				<span>∏≈ƒ°¡§∫∏</span></a></li>
+			<li class="list-item"><a href="<%=ft_nav3%>" class="<%=anim_class%>">
+				<span>∆¿¡§∫∏</span></a></li>
+			<li class="list-item"><a href="faq.do">
+				<span>FAQ</span></a></li>
+			<li class="list-item"><a href="#make-team" class="popup-with-zoom-anim">
+				<span>∆¿∏∏µÈ±‚</span></a></li>
+			<li class="list-item"><a href="#joinTeam" class="popup-with-zoom-anim joinTeamA">
+				<span>∆¿∞°¿‘</span></a></li>
 		</ul>
 	</div>
 	<div id="ban" class="agileinfo_menu w3l_menu">
@@ -369,15 +382,6 @@ String anim_class="";
 		</div>
 		
 		<div class="footer_nav">
-			<%if(session.getAttribute("memberInfo")==null){
-				ft_nav2="#make-team";
-				ft_nav3="#make-team";
-				anim_class="popup-with-zoom-anim";
-			}else if(session.getAttribute("memberInfo")!=null){
-				ft_nav2="matchStatus.do?teamCode="+session.getAttribute("teamCode");
-				ft_nav3="info.do?teamCode="+session.getAttribute("teamCode");
-				anim_class="";
-			}%>
 			<div class="ft_nav1"><a href="searchMatch.do"><img src="images/matching.png" width="40px" height="40px"></a></div>
 			<div class="ft_nav2"><a href="<%=ft_nav2%>" class="<%=anim_class%>"><img src="images/status.png" width="40px" height="40px"></a></div>
 			<div class="ft_nav3"><a href="<%=ft_nav3%>" class="<%=anim_class%>"><img src="images/teamInfo.png" width="40px" height="40px"></a></div>

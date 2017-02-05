@@ -10,7 +10,8 @@
 			<a href="#small-dialog" class="play-icon popup-with-zoom-anim">로그인하러 가기</a>
 	<%} else if ((Integer)session.getAttribute("teamCode") == 0) {%>
 			<h2>소속된 팀이 없습니다.</h2>
-			<a href="#make-team" class="play-icon popup-with-zoom-anim">팀 만들러 가기</a>
+			<a href="#make-team" class="play-icon popup-with-zoom-anim">팀 만들러 가기</a><br>
+			<a href="#joinTeam" class="play-icon popup-with-zoom-anim joinTeamA">팀 가입하러 가기</a>
 	<%} else { %>
 	<h2>경기 만들기</h2>
 	<div class="modal-body agileits_modal_body team">

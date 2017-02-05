@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.versus.command.ApplyMatch;
 import com.versus.command.Command;
+import com.versus.command.JoinTeamAjax;
 import com.versus.command.MatchResult;
 import com.versus.command.SignUpCheck;
 
@@ -55,6 +56,9 @@ public class FrontAjaxController extends HttpServlet {
 			command.execute(request, response);
 		}if(comm.equals("matchResult.ajax")){
 			command = new MatchResult();
+			command.execute(request, response);
+		}if(comm.equals("joinTeam.ajax")){
+			command = new JoinTeamAjax();
 			command.execute(request, response);
 		}
 		

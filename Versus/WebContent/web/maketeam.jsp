@@ -18,7 +18,7 @@
 		<a href="#small-dialog" class="play-icon popup-with-zoom-anim">로그인하러 가기</a>		
 	<%}else if(teamCode != 0){%>
 		<h2>이미 소속된 팀이 있습니다.</h2>
-		<a href="info.jsp">탈퇴하러 가기</a>	
+		<a href="info.do?teamCode="<%=session.getAttribute("teamCode")%>>탈퇴하러 가기</a>	
 	<%}else{%>
 	<h2>팀 만들기</h2>
 	<div class="modal-body agileits_modal_body">
@@ -30,5 +30,26 @@
 			<input type="submit" value="팀 만들기">
 		</form>
 	</div>
+	<%} %>
+</div>
+<div id="joinTeam" class="mfp-hide w3ls_small_dialog">
+	<%if(session.getAttribute("memberInfo") == null){%>
+		<h2>먼저 로그인해야 합니다.</h2>
+		<a href="#small-dialog" class="play-icon popup-with-zoom-anim">로그인하러 가기</a>		
+	<%}else if(teamCode != 0){%>
+		<h2>이미 소속된 팀이 있습니다.</h2>
+		<a href="info.do?teamCode="<%=session.getAttribute("teamCode")%>>탈퇴하러 가기</a>	
+	<%}else{%>
+	<h2>팀 목록</h2>
+	<form>
+		<input type="hidden" name="teamJoinId" value="<%=session.getAttribute("id")%>">
+		<table id="joinTeamTable" class="table table-condensed">
+			<tr>
+				<td>팀이름</td>
+				<td>주장</td>
+				<td>&nbsp;</td>
+			</tr>
+		</table>
+	</form>
 	<%} %>
 </div>
