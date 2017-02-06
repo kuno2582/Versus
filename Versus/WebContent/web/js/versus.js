@@ -75,7 +75,7 @@ $(window).load(function() {
 //가입하러가기 팀정보불러오기 에이잭스
 $('.joinTeamA').click(function(){
 	$.ajax({
-		type:'GET',
+		type:'POST',
 		url:"joinTeam.ajax",
 		datatype:"JSON",
 		contentType: "application/x-www-form-urlencoded;charset=UTF-8",

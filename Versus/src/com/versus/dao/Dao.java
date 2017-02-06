@@ -1159,4 +1159,37 @@ public class Dao {
 		}
 		
 	}//teamInfoFix()
+	
+	public void leaveTeam(String targetID){
+		
+		String URL = "jdbc:mysql://localhost:3306/versus?useUnicode=true&characterEncoding=euc-kr";		
+		String USER = "root";							
+		String PASS="apmsetup";		
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try{
+			Class.forName("com.mysql.jdbc.Driver");	
+			connection = DriverManager.getConnection(URL, USER, PASS);
+			String query = "SET NAMES euckr";
+			Statement stat = connection.createStatement();
+			stat.executeQuery(query);
+			
+			query = "UPDATE member_info SET TEAM_CODE=0 WHERE ID=?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, targetID);
+			preparedStatement.executeUpdate();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try{
+				if(preparedStatement!=null)preparedStatement.close();
+				if(connection!=null)connection.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		
+	}
 }

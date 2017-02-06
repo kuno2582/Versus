@@ -125,6 +125,8 @@ String anim_class="1";
 			<div class="bottom-teaminfo-right">
 			<%if((Boolean)session.getAttribute("isLeader") || (Boolean)session.getAttribute("isSecondLeader")){%>
 				<a href="#" id="fix-team"><img src="images/teamInfoFix.png" width="35px" height="35px"></a>
+			<%}else{%>
+				<a href="leaveTeam.do?targetID=<%=session.getAttribute("id")%>" class="leaveTeam">Ε»Επ</a>
 			<%}%>
 			</div>
 		</div>

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.versus.command.AcceptMatch;
 import com.versus.command.Command;
 import com.versus.command.FaqCommand;
+import com.versus.command.LeaveTeam;
 import com.versus.command.LoginCheck;
 import com.versus.command.MakeMatchCommand;
 import com.versus.command.MakeTeamCommand;
@@ -84,7 +85,7 @@ public class FrontController extends HttpServlet {
 		}else if(comm.equals("makeTeam.do")){
 			command = new MakeTeamCommand();
 			command.execute(request, response);
-			viewPage = "main.jsp";
+			viewPage = "sessionPage.jsp";
 		}else if(comm.equals("makeMatch.do")){
 			command = new MakeMatchCommand();
 			command.execute(request, response);
@@ -126,6 +127,10 @@ public class FrontController extends HttpServlet {
 			command = new TeamInfoFixCommand();
 			command.execute(request, response);
 			viewPage = "main.jsp";
+		}else if(comm.equals("leaveTeam.do")){
+			command = new LeaveTeam();
+			command.execute(request, response);
+			viewPage = "sessionPage.jsp";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

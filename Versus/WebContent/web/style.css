@@ -1149,9 +1149,9 @@ opacity: .1;
 .bottom-teaminfo-right, .bottom-status-right {
 	display: inline-block;
 	height:40px;
-	width:40px;
+	width:60px;
 	float: right;
-	margin-right: 2.5%;
+	
 }
 #status-success, #status-ing, #status-fail {
 	width: 90%;
@@ -1161,6 +1161,15 @@ opacity: .1;
 	border: 1px solid gray;
 	overflow: auto;
 	overflow-x: hidden;
+}
+.leaveTeam {
+	display:inline-block;
+	margin-top:7px;
+	font-size: 13pt;
+	color: #fff;
+}
+.leaveTeam:hover {
+	color: #ff0000;
 }
 #faq-div {
 	width: 90%;
